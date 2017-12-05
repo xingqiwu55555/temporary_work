@@ -156,5 +156,14 @@ else:
 
 6. 数据类型转换
 
-## 语句
+## 语句 
+- [菜鸟教程](http://www.runoob.com/python/python-if-statement.html)
 1. 条件语句
+2. while循环语句
+3. for循环语句
+4. 循环嵌套
+5. break语句
+6. continue语句
+7. pass语句
+
+## 
