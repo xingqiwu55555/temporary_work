@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)http://c.irunyan.com/bns2/nfc_ext_rebatenews -->
+<html lang="en" id="html"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>红包奖励提醒</title>
+<link rel="stylesheet" href="./红包奖励提醒_files/fanlidztx.css">
+<script src="./红包奖励提醒_files/hm.js.下载"></script><script src="./红包奖励提醒_files/jquery.min.js.下载"></script>
+<style>
+    </style>
+</head>
+<body>
+<div class="container">
+<ul>
+<li><h3>奖励到账提醒</h3><p class="fal_dz_sj">2017-9-26 17:8:51</p><div class="clear"></div> <div class="fl_ct_out"><div class="fl_je"><img src="./红包奖励提醒_files/fl_je.jpg" alt=""><span>￥</span><p>10</p></div><p class="fl_content">张艳玲(ID:5931350)购买玻尿酸保湿乳液x5，奖励张艳玲10元</p><div class="clear"></div></div></li><li><h3>奖励到账提醒</h3><p class="fal_dz_sj">2017-9-26 17:8:51</p><div class="clear"></div> <div class="fl_ct_out"><div class="fl_je"><img src="./红包奖励提醒_files/fl_je.jpg" alt=""><span>￥</span><p>10</p></div><p class="fl_content">张艳玲(ID:5931350)购买玻尿酸魅惑双头口红x5，奖励张艳玲10元</p><div class="clear"></div></div></li><li><h3>奖励到账提醒</h3><p class="fal_dz_sj">2017-9-25 11:59:32</p><div class="clear"></div> <div class="fl_ct_out"><div class="fl_je"><img src="./红包奖励提醒_files/fl_je.jpg" alt=""><span>￥</span><p>10</p></div><p class="fl_content">张艳玲(ID:5931350)购买玻尿酸保湿弹力眼霜x5，奖励张艳玲10元</p><div class="clear"></div></div></li></ul>
+</div>
+<script>
+
+    var data = {};
+    data.method = 'getlist';
+    data.page = 0;
+    data.lastId = 0;
+    get_more();
+    function get_more(){
+        $.post('/bns2/nfc_ext_rebatenews',data,function(res){
+            $(".container ul").find('.loader').remove();
+            var res = JSON.parse(res);
+
+            data.lastId = res.lastId;
+//            console.info(res);
+            if(res.status == 'ok') {
+                var dat = res['data'];
+//                var dat2 = res['data2'];
+//                if (dat2.length > 0) {
+//                    for (var i = 0; i < dat2.length; i++) {
+//                        $('<li><h3>红包返回提醒</h3>' + '<p class="fal_dz_sj">' + dat2[i] + '</p><div class="clear"></div>' + ' <div class="fl_ct_out"><div class="fl_je"></i></div><p class="fl_content"></p><div class="clear"></div></div></li>').appendTo('.container ul');
+//                    }
+//                    data.page ++;
+//                    load_flag = false;
+////                    if(dat.length > 8)
+////                        $(".container ul").append('<div class="loader"><div class="loading-3"><i></i><i></i><i></i><i></i><i></i></div></div>');
+//                }
+                if (dat.length > 0) {
+                    for (var i = 0; i < dat.length; i++) {
+                        var title = dat[i].des;
+                        var created = timeformat(dat[i].created);
+                        var money = dat[i].money;
+                        var send = dat[i].send;
+                        var html = '<li><h3>奖励到账提醒';
+                        if(0 == 3879841){
+                            if(dat[i].orderid){
+                                html += '--<a href="/bns2/nfc_ext_query?send_user_id='+send+'" style="color:#000;font-size: 0.9em;">查看</a>';
+                            }
+                            html += '</h3><p class="fal_dz_sj">' + created + '</p><div class="clear"></div>' + ' <div class="fl_ct_out"><div class="fl_je"><img src="http://img.c.irunyan.com/img/fl_je.jpg" alt = ""><span>￥</span></i><p>' + money + '</p></div><p class="fl_content">' + title + '</p><div class="clear"></div></div></li>';
+                                                        $('.container ul').append(html);
+//                            html.appendTo('.container ul');
+                        }else{
+
+                            var create = dat[i].created;
+
+                            if(dat[i].hasOwnProperty('refund')){
+                                var hitTitle = '退款提醒';
+                                if(dat[i].hasOwnProperty('info') && dat[i].info == 'dealing'){
+                                    hitTitle = '银行处理中';
+                                }
+                                if(dat[i].info == 'back'){
+                                    hitTitle = '收回已找回红包';
+                                    $('<li><h3>'+hitTitle+'<small style="padding: 2px 10px;color:red" class="show_rec_back" data="'+dat[i].selfId+'">查看</small></h3>' + '<p class="fal_dz_sj">' + create + '</p><div class="clear"></div>' + ' <div class="fl_ct_out"><div class="fl_je"><img src="http://img.c.irunyan.com/img/fl_je.jpg" alt = ""><span>￥</span></i><p>' + money + '</p></div><p class="fl_content">' + title + '</p><div class="clear"></div></div></li>').appendTo('.container ul');
+                                    $('.show_rec_back').unbind('click');
+                                    $('.show_rec_back').bind('click',show_rec_back);
+                                    continue;
+                                }
+                                $('<li><h3>'+hitTitle+'</h3>' + '<p class="fal_dz_sj">' + create + '</p><div class="clear"></div>' + ' <div class="fl_ct_out"><div class="fl_je"></i></div><p class="fl_content">'+title+'</p><div class="clear"></div></div></li>').appendTo('.container ul');
+                            }else{
+                                $('<li><h3>奖励到账提醒</h3>' + '<p class="fal_dz_sj">' + created + '</p><div class="clear"></div>' + ' <div class="fl_ct_out"><div class="fl_je"><img src="http://img.c.irunyan.com/img/fl_je.jpg" alt = ""><span>￥</span></i><p>' + money + '</p></div><p class="fl_content">' + title + '</p><div class="clear"></div></div></li>').appendTo('.container ul');
+                            }
+                        }
+                    }
+                    data.page ++;
+                    load_flag = false;
+                    if(dat.length > 8)
+                        $(".container ul").append('<div class="loader"><div class="loading-3"><i></i><i></i><i></i><i></i><i></i></div></div>');
+                }
+
+
+
+
+            }else{
+                load_flag = true;
+                $(".container ul").append('<div style="height:24px;margin:auto;margin-top:20px;margin-bottom:15px;text-align: center;">没有了</div>');
+            }
+        });
+    }
+    function getLocalTime(nS) {
+        return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/:\d{1,2}$/,' ');
+    }
+    function timeformat(d) {
+      var d = new Date(d * 1000);
+      var date = (d.getFullYear()) + "-" +
+          (d.getMonth() + 1) + "-" +
+          (d.getDate()) + " " +
+          (d.getHours()) + ":" +
+          (d.getMinutes()) + ":" +
+          (d.getSeconds());
+      return date;
+    }
+
+    var load_flag = false;
+    $(function () {
+        $(window).scroll(function () {
+            if (load_flag) {
+                return;
+            }
+            var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+            if (totalheight >= ($(document).height())) {
+                load_flag=true;
+                loadMore();
+            }
+        });
+    });
+
+    function loadMore() {
+        get_more();
+    }
+    function show_rec_back(){
+        var selfId = $(this).attr('data');
+        var that = $(this);
+        $(this).html('请等待');
+        $.post('',{method:'queryBackRb',selfId:selfId},function(r){
+            if(r.status == 'ok'){
+                var tips = '您在：'+r.data.get+'成功提现'+ r.data.money+'元，但由于微信错误导致这笔钱被您在：'+r.data.created+
+                    '找回至商城余额，现在被系统自动收回这部分金额。'+'如有疑问，请查看提现当天的微信零钱明细，感谢您的支持。';
+//                var tips = '您在：'+r.data.created+',有一笔：'+ r.data.money + '元的微信红包找回';
+                alert(tips);
+            }else{
+                alert(r.msg);
+            }
+            that.html('查看');
+        });
+    }
+</script>
+
+
+<script src="./红包奖励提醒_files/jweixin-1.0.0.js.下载"></script>
+<script type="text/javascript">
+    //分享
+    wx.config({
+        debug: false,
+        appId: '',
+        timestamp: '',
+        nonceStr: '',
+        signature: '',
+        jsApiList: [
+            'onMenuShareTimeline',//分享到朋友圈
+            'onMenuShareAppMessage'//分享给朋友
+        ]
+    });
+    window.onload = function () {
+        wx.ready(function () {
+            $('.loading-html').css('opacity', 0);
+            setTimeout(function () {
+                $('.loading-html').hide();
+            }, 510);
+            // 在这里调用 API
+            wx.onMenuShareTimeline({
+                title: '!', // 分享标题  //“别以为你用过最好的玻尿酸”
+                link: decodeURIComponent('http%3A%2F%2Fc.irunyan.com%3Ftype%3Donetimeline%26rec_id%3D3879841'), // 分享链接
+                imgUrl: 'http://c.irunyan.com/themes/bns/img/thumb_1.jpg', // 分享图标
+                success: function () {
+
+                    //获取已选择的商品ID和数量
+                    //post地址:/bns2/buy_orderdetail
+                    //location.href = '/bns2/nfc_buy_orderdetail';
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+
+            wx.onMenuShareAppMessage({
+                title: '', // 分享标题
+                desc: '', // 分享描述
+                link:decodeURIComponent('http%3A%2F%2Fc.irunyan.com%3Ftype%3Donemsg%26rec_id%3D3879841'), // 分享链接
+                imgUrl: 'http://c.irunyan.com/themes/bns/img/thumb_1.jpg', // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    //location.href = '/bns2/nfc_buy_orderdetail';
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+        });
+    }
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script></body></html>

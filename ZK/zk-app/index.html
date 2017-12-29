@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>娅慧</title>
+<link href="./src/css/newfront.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="./src/css/swiper.min.css">
+<!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script src="./src/js/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="loading-html" style="opacity: 0; display: none;">
+    <div class="loading-fixed">
+      <div class="loader loader--snake"></div>
+    </div>
+  </div>
+  <div class="zhezhao1_choose">
+    <div class="sure-del">
+      <h6>提示</h6>
+      <p>请您先购买娅慧相关产品方可进入</p>
+      <div class="clearfix">
+        <div id="delate">取消</div>
+        <div id="sure">退出登陆</div>
+      </div>
+    </div>
+  </div>
+  <div class="addWrap" style="overflow-x: hidden">
+    <div class="swiper-container swiper-container-horizontal" style="z-index:0">
+      <div class="swiper-wrapper">
+        <!-- <div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="4" style="width: 414px;">
+          <a href="javascript:;"><img class="img-responsive" src="./src/images/lz12.jpg"></a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="rec_product">
+    <div class="clearfix news-box">
+      <div class="news-lf">平台快报</div>
+      <ul class="list-news">
+        <!-- <li><a href="nfc_news_detail.html?id=2323">【郑重声明】近期有违法诈骗分子冒充美聚天下（北京）网络服务有限公司，现在公司已经报警。</a></li> -->
+      </ul>
+    </div>
+    <div class="rec_head">
+      <p>列表商品</p>
+    </div>
+    <ul class="goodsbody clearfix list-top">
+    <!--<li>
+      <div onclick="location=&#39;nfc_good_detail?good_id=17553488&#39;">
+        <img data-sizes="auto" data-src="http://img.c.irunyan.com/img/compactmask_main.jpg" style="min-height: 173px;" class="goods1 lazyload">
+        <div class="goods-title">薇脸紧致玻尿酸补水面膜</div>
+        <div class="goods-tips">
+          1片
+        </div>
+      </div>
+      <div class="goods-price">
+        ¥29.8
+        <del>
+¥298
+</del>
+      </div>
+      <img src="./src/images/carg.svg" class="car" data="17553488">
+    </li>-->
+    </ul>
+
+    <div class="rec_head">
+      <p>推荐商品</p>
+    </div>
+    <ul class="goodsbody clearfix list-bottom" style="margin:5px 0 80px;">
+      
+    </ul>
+  </div>
+  
+  <ul class="bottom clearfix">
+    <li>
+      <img src="./src/images/menured.svg">
+      <p class="active">商城</p>
+    </li>
+    <li>
+      <div onclick="location=&#39;nfc_buycars.html&#39;">
+        <img src="./src/images/carb.svg" class="cart">
+        <p>购物车</p>
+        <div class="add">+1</div>
+      </div>
+    </li>
+    <li>
+      <div onclick="location=&#39;nfc_extension.html&#39;">
+        <img src="./src/images/tuiguang.svg">
+        <p>推广</p>
+      </div>
+    </li>
+    <li>
+      <div onclick="location=&#39;nfc_user.html&#39;">
+        <img src="./src/images/iwhite.svg">
+        <p>我的</p>
+      </div>
+    </li>
+  </ul>
+
+  <script>
+    window.lazySizesConfig = window.lazySizesConfig || {};
+    window.lazySizesConfig.loadMode = 1;
+    window.lazySizesConfig.init = false;
+  </script>
+  <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=2423f0399906505f5ff497e6ffc60d53"></script>
+  <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
+  <script src="./src/js/common.js"></script>
+  <script src="./src/js/swiper.min.js"></script>
+  <script src="./src/js/lazysizes.min.js"></script>
+  <script src="./src/js/jquery.fly.min.js"></script>
+  <script>
+    $(function() {
+      var POSITION = null;
+      var token = window.localStorage.token;
+      if (localStorage.getItem('position')) {
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        ajaxApi(); 
+      } else {
+        mapPosition();
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        ajaxApi(); 
+      }
+      
+      //解析定位结果
+      function ajaxApi() {
+      	// 首页轮播
+      	$.api.get(serverUrlBase + '/base/banner/1', {
+          lat: POSITION.lat,
+          lng: POSITION.lng
+        }, function(res) {
+          if(res.success) {
+            initSwiper(res.data.list);
+          } else {
+            alert(res.resultMsg);
+          }
+        });
+        
+        // 获取商城商品第一页
+        $.api.get(serverUrlBase + '/product/pager', {
+          lat: POSITION.lat,
+          lng: POSITION.lng,
+          type: 1,
+          page: 1
+        }, function(res) {
+          if(res.success) {
+            initDataP(res.data.pager.list, $('.list-top'));
+          } else {
+            alert(res.resultMsg);
+          }
+        });
+
+        // 获取指定位置推荐商品
+        $.api.get(serverUrlBase + '/activity/rec/product/1', {
+          lat: POSITION.lat,
+          lng: POSITION.lng
+        }, function(res) {
+          if(res.success) {
+            initDataP(res.data.list, $('.list-bottom'));
+          } else {
+            alert(res.resultMsg);
+          }
+        });
+
+        // 平台快报，资讯列表
+        $.api.get(serverUrlBase + '/base/article/list', {
+          num: 6
+        }, function(res) {
+          if(res.success) {
+            initDataNew(res.data.list);
+          } else {
+            alert(res.resultMsg);
+          }
+        });
+      }
+
+      //解析定位错误信息
+      function onError(data) {
+        alert('定位失败');
+      }
+      // 初始化轮播图
+      function initSwiper(data){
+        var arr = [];
+        var len = data.length;
+        arr.push('<div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="'+ (len-1) +'">'+
+            '<a href="'+ data[len-1].link +'"><img class="img-responsive" src="'+ getResUrlFromPath(data[len-1].image) +'"></a>'+
+            '</div>');
+        $.each(data, function(i, item){
+          arr.push('<div class="swiper-slide" data-swiper-slide-index="'+i+'">'+
+            '<a href="'+ item.link +'"><img class="img-responsive" src="'+ getResUrlFromPath(item.image) +'"></a>'+
+            '</div>');
+        });
+        arr.push('<div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="'+ 0 +'">'+
+            '<a href="'+ data[0].link +'"><img class="img-responsive" src="'+ getResUrlFromPath(data[0].image) +'"></a>'+
+            '</div>');
+        $('.swiper-wrapper').html(arr.join(''));
+          var mySwiper = new Swiper('.swiper-container', {
+          loop: true,
+          autoplay: 5000,
+          pagination: '.swiper-pagination',
+          paginationClickable: true,
+          speed: 800
+        });
+      }
+      // 初始化推荐商品
+      function initDataP(data, elem) {
+        var arr = [];
+        $.each(data, function(i, item) {
+          arr.push('<li><div onclick="location=&#39;nfc_good_detail.html?good_id=' + item.id + '&#39;">' +
+            '<img data-sizes="auto" data-src="' + getResUrlFromPath(item.mainImage) + '" style="min-height: 173px;" class="goods1 lazyautosizes lazyloaded" sizes="180px" src="' + getResUrlFromPath(item.mainImage) + '">' +
+            '<div class="goods-title">' + item.name + '</div>' +
+            '<div class="goods-tips">' + item.weight + 'g</div>' +
+            '</div><div class="goods-price">' + Utils.format.money(item.price) + '￥<del>' + Utils.format.money(item.oriPrice) + '￥</del></div>' +
+            '<img src="./src/images/carg.svg" class="car" data="' + item.id + '">' +
+            '</li>')
+        })
+        elem.html(arr.join(''));
+      }
+
+      //初始化新闻
+      function initDataNew(data) {
+        var arr = [];
+        $.each(data, function(i, item){
+          arr.push('<li><a href="nfc_news_detail.html?id='+ item.id +'">' +item.title +'</a></li>');
+        });
+        $('.list-news').html(arr.join(''));
+        // newScroll();
+        setInterval(function(){
+          AutoScroll(".news-box");
+        }, 3000)
+      }
+
+      function AutoScroll(obj) {
+        $(obj).find("ul:first").animate({
+          'top': '-36px'
+        }, 1000, function() {
+          $(this).css({ 'top': '0' }).find("li:first").appendTo(this);
+        });
+      }
+
+      /*        倒计时
+      var De_height = $('.Deliver').height();
+      $('.count_down').css('line-height', De_height + 'px');
+      var clock = setInterval(count_down, 1000);
+
+      function showPosition(position) {
+
+      }
+
+      function count_down() {
+        var de_span = $('.Deliver li span');
+        var i = de_span.html();
+        i--;
+        de_span.html(i);
+        if(i == 0) {
+          $('.Deliver').css('opacity', '0');
+          setTimeout(function() {
+            $('.Deliver').hide();
+          }, 500);
+          clearInterval(clock);
+        }
+      }
+      */
+
+      //加入购物车动画
+
+      var offset = $(".cart").offset();
+      $(".goodsbody").on('click', '.car', function(event) {
+        var caroffset = $(this).offset();
+        var cary = $(this).offset().top - $(document).scrollTop();
+        var carty = $(".cart").offset().top - $(document).scrollTop();
+        var img = $(this).siblings().children('img').attr('src'); //获取当前点击图片链接
+        var flyer = $('<img class="flyer-img" src="' + img + '">'); //抛物体对象
+        var type_id = $(this).attr('data');
+
+        $.api.post(serverUrlBase + '/customer/'+ token +'/cart/add', {
+          lat: POSITION.lat,
+          lng: POSITION.lng,
+          productId: type_id
+        }, function(res) {
+          if(res.success) {
+            flyer.fly({
+              start: {
+                left: caroffset.left - 15, //抛物体起点横坐标
+                top: cary - 15 //抛物体起点纵坐标
+              },
+              end: {
+                left: offset.left + 9, //抛物体终点横坐标
+                top: carty + 18, //抛物体终点纵坐标
+                width: 0,
+                height: 0
+              },
+              onEnd: function() {
+                this.destory(); //销毁抛物体
+              }
+            });
+          } else {
+            alert(res.resultMsg);
+          }
+        });
+        setTimeout(function() {
+          $('.add').addClass('add1');
+        }, 500);
+        setTimeout(function() {
+          $('.add').removeClass('add1');
+        }, 1000);
+      });
+    });
+    $('.warn').click(function() {
+      $('.zhezhao1_choose').addClass('zhezhao1-show');
+      $('.sure-del').addClass('sure-show');
+
+      $('#delate,#sure').click(function() {
+        if($(this).attr('id') == 'sure') {
+          window.location.href = '/user/loginout';
+        }
+        $('.zhezhao1_choose').hide().removeClass('zhezhao1-show');
+        $('.sure-del').removeClass('sure-show');
+        setTimeout(function() {
+          $('.zhezhao1_choose').show()
+        }, 500)
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    window.onload = function() {
+      $('.loading-html').css('opacity', 0);
+      setTimeout(function() {
+        $('.loading-html').hide();
+      }, 510);
+    };
+    $(function() {
+      //强制取消焦点
+      $('input').attr({
+        'disabled': 'disabled',
+        'readonly': 'readonly'
+      }).blur();
+      //轮播图
+      
+    });
+
+    //图片开始加载
+    lazySizes.init();
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "http://hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>我的订单</title>
+<link href="./src/css/userorder.css" rel="stylesheet">
+<script src="./src/js/jquery.min.js"></script>
+</head>
+
+<body>
+  <ul class="tab-bar clearfix">
+    <li class="active">全部</li>
+    <li>未支付</li>
+    <li>已支付</li>
+    <li>已发货</li>
+    <li>已完成</li>
+  </ul>
+  <ul class="con">
+    <!-- <li class="order-body clearfix">
+      <a class="link_order" href="nfc_user_orderdetail.html?orderid=25937787">
+        <div class="clearfix good_wrap">
+          <img src="./src/images/smallbbfrost.jpg" class="goods">
+          <img src="./src/images/123131.jpg" class="goods">
+          <img src="./src/images/grayjiantou.svg" class="jiantou"></div>
+      </a>
+      <p class="time">2017-09-18 17:47</p>
+      <p class="price">119.2</p>
+    </li>
+    <li class="order-body clearfix">
+      <a class="link_order" href="nfc_user_orderdetail.html?orderid=13301184">
+        <div class="clearfix good_wrap">
+          <img src="./src/images/smallbbfrost.jpg" class="goods">
+          <div class="fl">
+            <p class="title">玻尿酸水润透亮气垫BB霜</p>
+            <p class="tips"></p>
+          </div>
+          <img src="./src/images/grayjiantou.svg" class="jiantou">
+        </div>
+      </a>
+      <p class="time">2017-08-12 16:12</p>
+      <p class="price">29.8</p>
+    </li> -->
+  </ul>
+
+  <!-- <div id="copy_dom" style="display: none">
+    <li class="order-body clearfix">
+      <a class="link_order" href="nfc_user_orderdetail.html?orderid=13301184">
+        <div class="clearfix good_wrap">
+          <img src="./src/images/smallbbfrost.jpg" class="goods">
+          <div class="fl">
+            <p class="title">玻尿酸水润透亮气垫BB霜</p>
+            <p class="tips"></p>
+          </div>
+          <img src="./src/images/grayjiantou.svg" class="jiantou"></div>
+      </a>
+      <p class="time">2017-08-12 16:12</p>
+      <p class="price">29.8</p>
+    </li>
+  </div> -->
+
+  <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=2423f0399906505f5ff497e6ffc60d53"></script>
+  <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
+  <script src="./src/js/common.js"></script>
+  <script>
+    /*
+    var load_flag = false;
+    var data = {};
+    data.page = 0;
+    data.method = 'getlist';
+    data.test_id = '';
+    get_more();
+
+    function get_more() {
+      
+      $.post('/bns2/nfc_user_order', data, function(res) {
+        $('ul.con').find('.loader').remove();
+        var res = JSON.parse(res);
+        console.info(res);
+        if(res.status == 'ok') {
+          var dat = res.data;
+          var dom = $('#copy_dom .order-body');
+          for(var i = 0; i < dat.length; i++) {
+            var link = '/bns2/nfc_user_orderdetail?orderid=' + dat[i].orderid;
+            dom.find('.link_order').attr('href', link);
+            dom.find('.time').html(dat[i].time);
+            dom.find('.price').html(dat[i].money);
+
+            dom.find('.good_wrap').html('');
+            if(dat[i].num == 1) {
+              dom.find('.good_wrap').append("<img src=" + dat[i][0].img + " class='goods'>");
+              dom.find('.goods').after("<div class='fl'><p class='title'>" + dat[i][0].name + "</p><p class='tips'>" + dat[i][0].des + "</p></div>");
+            } else {
+              for(var j = 0; j < dat[i].num; j++) {
+                dom.find('.good_wrap').append("<img src=" + dat[i][j].img + " class='goods'>");
+              }
+              if(dat[i].num == 4) {
+                dom.find('.good_wrap').append("<div class='lve'>...</div>");
+              }
+            }
+            dom.find('.good_wrap').append("<img src='http://img.c.irunyan.com/img/grayjiantou.svg' class='jiantou'>");
+            dom.clone().appendTo($('ul.con'));
+          }
+          data.page++;
+          load_flag = false;
+          if(dat.length > 8)
+            $("ul.con").append('<div class="loader"><div class="loading-3"><i></i><i></i><i></i><i></i><i></i></div></div>');
+        } else {
+          load_flag = true;
+          $("ul.con").append('<div class="loader">没有了</div>');
+        }
+      })
+      
+    }
+    $(function() {
+      $(window).scroll(function() {
+        if(load_flag) {
+          return;
+        }
+        var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+        if(totalheight >= ($(document).height())) {
+          load_flag = true;
+          loadMore();
+        }
+      });
+
+      //获取更多订单
+    });
+
+    function loadMore() {
+      get_more();
+    }
+    */
+  </script>
+  <script type="text/javascript">
+    (function(){
+      var token = localStorage.getItem('token');
+      var POSITION = null;
+      var param = {page: 1, type: -1, status: -1};
+      var totalPages = 0;
+      var ajax = {
+        getList: function(){
+          $.api.get(serverUrlBase + '/customer/' + token + '/order/pager', param, function(res) {
+            if(res.success) {
+              totalPages = res.data.totalPages;
+              init.lists(res.data.pager.list);
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        }
+      };
+      
+      var init = {
+        lists: function(data) {
+          var arr = [];
+          $.each(data, function(item, i){
+            var imgStr = '';
+            var imgs = [], img_len = item.subs.length;
+            if (img_len < 2) {
+              imgStr = '<img src="'+ getResUrlFromPath(item.subs[0].productMainimage) +'" class="goods">'+
+                        '<div class="fl">'+
+                          '<p class="title">'+ item.subs[0].productName +'</p>'+
+                          '<p class="tips"></p>'+
+                        '</div>';
+            } else {
+              $.each(item.subs, function(img, j){
+                imgs.push('<img src="'+ getResUrlFromPath(img.productMainimage) +'" class="goods">')
+              });
+              imgStr = imgs.join('');
+            }
+            arr.push('<li class="order-body clearfix">'+
+              '<a class="link_order" href="nfc_user_orderdetail.html?orderid='+item.orderId +'">'+
+              '<div class="clearfix good_wrap">'+ imgStr +
+              
+              '<img src="./src/images/grayjiantou.svg" class="jiantou">'+
+              '</div>'+
+              '</a>'+
+              '<p class="time">'+ item.dateAdded +'</p>'+
+              '<p class="price">'+ item.total +'</p>'+
+              '</li>');
+          });
+          $('.con').append(arr.join(''));
+        },
+        bindEvent: function() {
+          $('.tab-bar').on('click','li',function(){
+            $(this).addClass('active').siblings().removeClass('active');
+          })
+        }
+      }
+
+      ajax.getList();
+      init.bindEvent();
+
+      $('.loading-html').css('opacity', 0);
+      setTimeout(function() {
+        $('.loading-html').hide();
+      }, 510);
+    })();
+  </script>
+</body>
+
+</html>

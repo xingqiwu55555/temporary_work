@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>提现</title>
+<link href="./src/css/usermoney.css" rel="stylesheet">
+<script src="./src/js/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="box">
+    <div class="input-box">
+      <input type="number" id="amount" placeholder="请输入提现金额">
+    </div>
+    <ul class="select-box">
+      <li class="active" target="1">
+        <img src="./src/images/payment1.png" class="payicon">
+        <p>微信提现</p>
+      </li>
+      <li target="2">
+        <img src="./src/images/payment2.png" class="payicon">
+        <p>支付宝提现</p>
+      </li>
+      <li target="3">
+        <img src="./src/images/payment3.png" class="payicon">
+        <p>银联提现</p>
+      </li>
+    </ul>
+    <ul class="text-box">
+      <li class="active" target="1">微信红包提现单笔1-499元，每天可提现5次</li>
+      <li target="2">支付宝提现单笔1-499元，每天可提现5次</li>
+      <li target="3">每天可使用银联提现10次，转出金额在1-1000之间<br/>每笔提现银行收取2元手续费</li>
+    </ul>
+
+    <div class="fix-box">
+      <div class="btn-true btn">确认提现</div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=2423f0399906505f5ff497e6ffc60d53"></script>
+  <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
+  <script src="./src/js/common.js"></script>
+  <script type="text/javascript">
+    (function(){
+      var token = localStorage.getItem('token');
+      var POSITION = null;
+      var ajax = {
+        getWithdraw: function (amount, id) {
+          $.api.get(serverUrlBase + '/customer/' + token + '/wallet/withdraw/apply', {
+            lat: POSITION.lat,
+            lng: POSITION.lng,
+            amount: amount,
+            withdrawMethodId: id
+          }, function(res) {
+            if(res.success) { 
+              alert('提现成功');
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        }
+      }
+      var init = {
+        bindEvent: function() {
+          $('.select-box').on('click','li',function(){
+            var index = $(this).attr('target');
+            $(this).addClass('active').siblings().removeClass('active');
+            $('.text-box li[target='+ index +']').addClass('active').siblings().removeClass('active');
+          });
+
+          $('.fix-box').on('click','.btn-true',function(){
+            var val = $('#amount').val();
+            var type = $('.select-box .active').attr('target');
+            if (val == '') {
+              alert('请输入提现金额');
+              return false;
+            }
+            ajax.getWithdraw(val, type);
+          });
+        }
+      }
+      if (localStorage.getItem('position')) {
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        init.bindEvent();
+      } else {
+        mapPosition();
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        init.bindEvent();
+      }
+
+      $('.loading-html').css('opacity', 0);
+      setTimeout(function() {
+        $('.loading-html').hide();
+      }, 510);
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>娅慧</title>
+<link href="./src/css/new-goods.css" rel="stylesheet">
+<link rel="stylesheet" href="./src/css/swiper.min.css">
+<link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script src="./src/js/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="loading-html" style="opacity: 0; display: none;">
+    <div class="loading-fixed">
+      <div class="loader loader--snake"></div>
+    </div>
+  </div>
+  <div class="addWrap" style="overflow-x: hidden">
+      <div class="swiper-container swiper-container-horizontal" style="z-index:0">
+        <div class="swiper-wrapper">
+          <!-- <div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="4" style="width: 414px;">
+            <a href="javascript:;"><img class="img-responsive" src="./src/images/lz12.jpg"></a>
+          </div> -->
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  <div class="container" style="overflow-x: hidden">
+    <!-- <div class="info-box box">
+      <p class="good-name">水电费水电费</p>
+    </div>
+    <div class="number-box box">
+      数量:<span>93557</span>
+    </div>
+    <div class="content-box"></div> -->
+    <ul class="goods_bottom clearfix">
+      <li class="clearfix small-li">
+        <div class="price clearfix">
+          <!-- <div class="price-top"><s>原价￥</s></div>
+          <div class="price-bot">￥29.8</div> -->
+        </div>
+      </li>
+      <li class="big-li"> <button class="add-to-cart" type="content">加入购物车</button></li>
+      <li class="small-li clearfix">
+        <a href="nfc_buycars.html">
+          <img src="./src/images/carg.svg" class="car">
+          <div class="num">0</div>
+          <div class="nam">购物车</div>
+        </a>&gt;
+      </li>
+    </ul>
+    <img src="" class="hide hide-img">
+  </div>
+
+  <script>
+    window.lazySizesConfig = window.lazySizesConfig || {};
+    window.lazySizesConfig.loadMode = 1;
+    window.lazySizesConfig.init = false;
+  </script>
+  <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
+  <script src="./src/js/common.js"></script>
+  <script src="./src/js/lazysizes.min.js"></script>
+  <script src="./src/js/swiper.min.js"></script>
+  <script src="./src/js/jquery.fly.min.js"></script>
+  <script>
+    $(function() {
+      var POSITION = null;
+      var token = window.localStorage.token;
+      var good_id = pageInfo.good_id;
+      var ajax = {
+        getDetail: function(){
+          $.api.get(serverUrlBase + '/product/'+ good_id +'?token=' + token, {
+            lat: POSITION.lat,
+            lng: POSITION.lng
+          }, function(res) {
+            if(res.success) {
+              initSwiper(res.data.object.imgs);
+              initDetail(res.data.object);
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        },
+        initCar: function(){
+          $.api.get(serverUrlBase + '/customer/'+ token +'/cart/pager?page=1', {
+            lat: POSITION.lat,
+            lng: POSITION.lng
+          }, function(res) {
+            if(res.success) {
+              $('.num').html(res.data.pager.totalItems);
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        },
+        addCar: function(elm){
+          var offset = $(".car").offset();
+          // var type = elm.attr('type');
+          if('1' != '1') return;
+          var caroffset = elm.offset();
+          var cary = elm.offset().top - $(document).scrollTop();
+          var carty = $(".car").offset().top - $(document).scrollTop();
+          var img = $('.hide').attr('src'); //获取当前点击图片链接
+          var flyer = $('<img class="flyer-img" src="' + img + '">'); //抛物体对象
+          $.api.post(serverUrlBase + '/customer/'+ token +'/cart/add', {
+            lat: POSITION.lat,
+            lng: POSITION.lng,
+            productId: good_id
+          }, function(res) {
+            if(res.success) {
+              flyer.fly({
+                start: {
+                  left: caroffset.left + 15, //抛物体起点横坐标
+                  top: cary //抛物体起点纵坐标
+                },
+                end: {
+                  left: offset.left + 25, //抛物体终点横坐标
+                  top: carty + 18, //抛物体终点纵坐标
+                  width: 0,
+                  height: 0
+                },
+                onEnd: function() {
+                  this.destory(); //销毁抛物体
+                }
+              });
+              var newnum = parseInt($('.num').text()) + 1;
+              setTimeout(function() {
+                $('.num').html(newnum);
+              }, 500);
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        }
+      }
+
+      if (localStorage.getItem('position')) {
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        ajax.getDetail(); 
+        ajax.initCar();
+      } else {
+        mapPosition();
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        ajax.getDetail(); 
+        ajax.initCar();
+      }
+
+      // 初始化轮播图
+      function initSwiper(data){
+        var arr = [];
+        var len = data.length;
+        arr.push('<div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="'+ (len-1) +'">'+
+            '<a href="'+ data[len-1].link +'"><img class="img-responsive" src="'+ getResUrlFromPath(data[len-1].image) +'"></a>'+
+            '</div>');
+        $.each(data, function(i, item){
+          arr.push('<div class="swiper-slide" data-swiper-slide-index="'+i+'">'+
+            '<a href="'+ item.link +'"><img class="img-responsive" src="'+ getResUrlFromPath(item.image) +'"></a>'+
+            '</div>');
+        });
+        arr.push('<div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="'+ 0 +'">'+
+            '<a href="'+ data[0].link +'"><img class="img-responsive" src="'+ getResUrlFromPath(data[0].image) +'"></a>'+
+            '</div>');
+        $('.swiper-wrapper').html(arr.join(''));
+          var mySwiper = new Swiper('.swiper-container', {
+          loop: true,
+          // autoplay: 3000,
+          pagination: '.swiper-pagination',
+          paginationClickable: true,
+          speed: 800
+        });
+      }
+      // 
+      function initDetail(data){
+        var str = ' <div class="info-box box">'+
+                        '<p class="good-name">'+ data.name +'</p>'+
+                  '</div>'+
+                  '<div class="number-box box">'+
+                      '数量：<span>'+ data.quantity +'</span>'+
+                  '</div>'+
+                  '<div class="content-box"> <p class="content-title">商品详情</p>'+ data.content +'</div>';
+        $('.goods_bottom').before(str);
+        $('.hide-img').attr('src', getResUrlFromPath(data.mainImage));
+        $('.price').html('<div class="price-top"><s>原价￥'+ Utils.format.money(data.oriPrice) +'</s></div><div class="price-bot">￥'+ Utils.format.money(data.price) +'</div>');
+      }
+
+      $(".add-to-cart").click(function(event) {
+        ajax.addCar($(this)); 
+      });
+      if('1' != '1') {
+        $('.add-to-cart').css('background', '#949494');
+        if('1' == '-1') {
+          $('.add-to-cart').html('即将开售');
+        } else {
+          $('.add-to-cart').html('即将开售');
+        }
+      }
+      var type_id = '4636030';
+      if(type_id == 27348) {
+        $('.container,body').css('background', '#e2e2e2')
+      } else if(type_id == 14982) {
+        $('.container,body').css('background', '#f2f2f2')
+      } else if(type_id == 27386) {
+        $('.container,body').css('background', '#000')
+      } else if(type_id == 239687) {
+        $('.container,body').css('background', '#f9f3dd')
+      } else if(type_id == 1142981) {
+        $('.container,body').css('background', '#fff')
+      } else if(type_id == 2242642) {
+        $('.container,body').css('background', '#e5e5e5')
+      } else if(type_id == 2259393) {
+        $('.container,body').css('background', '#e5e5e5')
+      } else if(type_id == 2262535) {
+        $('.container,body').css('background', '#e5e5e5')
+      } else if(type_id == 2718441) {
+        $('.container,body').css('background', '#f9f3dd')
+      }
+
+    });
+
+    //图片开始加载
+    lazySizes.init();
+    $('.loading-html').css('opacity', 0);
+    setTimeout(function() {
+      $('.loading-html').hide();
+    }, 510);
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "http://hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</body>
+
+</html>

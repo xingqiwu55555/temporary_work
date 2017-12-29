@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>订单确认</title>
+<link href="./src/css/orderdetail.css" rel="stylesheet">
+<script src="./src/js/fastclick.js"></script>
+<script src="./src/js/jquery.min.js"></script>
+</head>
+
+<body style="background-color: rgb(243, 243, 243); overflow-x: hidden; height: 667px;">
+  <div class="loading-html" style="opacity: 0; display: none;">
+    <div class="loading-fixed">
+      <div class="loader loader--snake"></div>
+    </div>
+  </div>
+  <form id="order_add" action="nfc_buy_orderdetail.html" onsubmit="return false;" method="post">
+    <div class="takeinfo">
+      <label>
+        <p>收货人</p>
+        <input type="text" name="consignee" value="张艳玲" class="info-response-width" placeholder="点击输入">
+      </label><br>
+      <label>
+        <p>手机号码</p>
+        <input type="text" name="phone" value="13582898630" class="info-response-width" placeholder="点击输入" onkeyup="this.value=this.value.replace(/[^\d]/g,&#39;&#39;);">
+      </label><br>
+      <label>
+        <p>所在省</p>
+        <select id="s_province" name="s_province" class="info-response-width">
+          <option value="00">省份</option>
+        </select>
+      </label><br>
+      <label>
+        <p>所在市</p>
+        <select id="s_city" name="s_city" class="info-response-width">
+          <option value="00">地级市</option>
+        </select>
+      </label><br>
+      <label>
+        <p>所在县</p>
+        <select id="s_county" name="s_county" class="info-response-width">
+          <option value="00">区、县、县级市</option>
+        </select>
+      </label><br>
+      <label style="border: none;">
+        <p>详细地址</p>
+        <textarea rows="2" cols="20" name="address_detail" value="" class="info-response-width" placeholder="点击输入详细地址"></textarea>
+      </label><br>
+      <!-- <h1 class="reminder1" style="font-size:12px; display: none; color: #bf2072;width:100%;margin: 0 auto;">温馨提示：</h1>
+      <p class="reminder1" style="font-size:10px;color: #333;display: none;width:100%;margin: 0 auto;">韩国地区额外支付36元邮费,香港、澳门、台湾省额外支付30元邮费</p> -->
+      <div class="takeinfo-bottom">
+        <div class="takeinfo-sure">确认</div>
+      </div>
+    </div>
+    <div class="takeinfo1">
+      <ul>
+        <li>
+          <img class="position" src="./src/images/position.svg">
+        </li>
+        <li class="takeinfo1-text">
+          <!-- <h1 class="fl cons">收货人：<span>张艳玲</span></h1>
+          <h1 class="fr con_pho">13582898630</h1>
+          <p class="fl cons2">
+            收货地址：<span>河北省 唐山市 丰润区 丰登坞镇张庄</span>
+          </p> -->
+        </li>
+        <li>
+          <img class="edit" src="./src/images/edit.svg">
+        </li>
+      </ul>
+    </div>
+    <div class="takeinfo2 clearfix">
+      <img class="position" src="./src/images/position-gray.svg"> 点击填写收货信息
+      <img class="edit" src="./src/images/edit.svg">
+    </div>
+    <ul class="goods">
+      <!-- <li class="clearfix" data="4876441" num="1" price="29.8">
+        <img src="./src/images/cleanser_small.jpg" class="goods1">
+        <div class="g-right">
+          <div class="clearfix goods-title">
+            <div class="fl">娅慧玻尿酸洁面片</div>
+            <div class="fr">￥29.8</div>
+          </div>
+          <div class="clearfix goods-tips">
+            <div class="fl">一纸唤醒肌肤素颜之美！</div>
+            <div class="fr">x1</div>
+          </div>
+        </div>
+      </li> -->
+    </ul>
+    <textarea class="remark" maxlength="44" name="remark" placeholder="选填：备注信息(50字以内)"></textarea>
+    <div class="cart-bottom">
+      <div class="total">
+        <div>共<span id="total2">1</span>件</div>
+        <div style="color: #000">合计 <span class="total-price">￥<span id="total1">0</span></span>
+        </div>
+      </div>
+      <div class="share-btn" id="order_add_submit">提交订单</div>
+    </div>
+  </form>
+  <form id="pay_confirm" action="http://c.irunyan.com/bns2/nfc_buy_payoptions" method="post">
+    <input type="hidden" name="jspara">
+    <input type="hidden" name="out_trade_no">
+    <input type="hidden" name="payprice">
+    <input type="hidden" name="other_postage">
+    <input type="hidden" name="goodtitle">
+    <input type="hidden" name="order_id">
+  </form>
+  <form id="integral_pay_confirm" action="http://c.irunyan.com/bns2/nfc_integral_buy" method="post">
+    <input type="hidden" name="integral_price">
+    <input type="hidden" name="integral_orderid">
+  </form>
+
+  <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
+  <script src="./src/js/common.js"></script>
+  <!-- <script src="./src/js/area.js"></script> -->
+  <script type="text/javascript">
+    (function() {
+      var token = localStorage.getItem('token');
+      var POSITION = null;
+      var DEFAULT_ID;
+      var products = [];
+      var DEFAULT = {
+        id_province: null,
+        id_city: null,
+        id_county: null,
+        province: null,
+        city: null,
+        district: null,
+      };
+      var ajax = {
+        getDefaultAddr: function() {
+          $.api.get(serverUrlBase + '/customer/' + token + '/address/default', {
+            lat: POSITION.lat,
+            lng: POSITION.lng
+          }, function(res) {
+            if(res.success) {
+              if (res.data.object) {
+                var obj = res.data.object;
+                DEFAULT_ID = obj.id;
+                DEFAULT = {
+                  id_province: obj.zoneId,
+                  id_city: obj.cityId,
+                  id_distrct: obj.districtId,
+                  province: obj.zone,
+                  city: obj.city,
+                  district: obj.district,
+                  address: obj.address,
+                  realname: obj.realname,
+                  phone: obj.phone,
+                }
+                init.addressShow(DEFAULT); 
+                $('.takeinfo1').show();
+              } else {
+                $('.takeinfo2').show();
+              }
+              ajax.getProvince();
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        },
+        getProvince: function() {
+          $.api.get(serverUrlBase + '/base/province', {
+            lat: POSITION.lat,
+            lng: POSITION.lng
+          }, function(res) {
+            if(res.success) {
+              init.provinceShow(res.data.list);
+              if (DEFAULT.id_province) {
+                ajax.getCity(DEFAULT.id_province);
+              } else {
+                ajax.getCity(res.data.list[0].id);
+              }
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        },
+        getCity: function(id){
+          $.api.get(serverUrlBase + '/base/city', {
+            lat: POSITION.lat,
+            lng: POSITION.lng,
+            provinceId: id
+          }, function(res) {
+            if(res.success) {
+              init.cityShow(res.data.list);
+              if (DEFAULT.id_city) {
+                ajax.getDistrict(DEFAULT.id_city);
+              } else {
+                ajax.getDistrict(res.data.list[0].id);
+              }
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        },
+        getDistrict: function(id) {
+          $.api.get(serverUrlBase + '/base/district', {
+            lat: POSITION.lat,
+            lng: POSITION.lng,
+            cityId: id
+          }, function(res) {
+            if(res.success) {
+              init.districtShow(res.data.list);
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        },
+        addAddress: function(param) {
+          $.api.post(serverUrlBase + '/customer/' + token + '/address/add', contactObj(param, {
+            lat: POSITION.lat,
+            lng: POSITION.lng,
+          }), function(res) {
+            if(res.success) {
+              $('.takeinfo').hide();
+              $('.takeinfo1').show();
+              ajax.deleteAddress(DEFAULT_ID);
+              DEFAULT_ID = res.data.id;
+              init.addressShow(DEFAULT);
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        },
+        deleteAddress: function(id) {
+          $.api.post(serverUrlBase + '/customer/' + token + '/address/del', {
+            lat: POSITION.lat,
+            lng: POSITION.lng,
+            id: id
+          }, function(res) {
+          });
+        },
+        orderSubmit: function(data) {
+          $.api.post(serverUrlBase + '/customer/' + token + '/order/add', contactObj(data,{
+            lat: POSITION.lat,
+            lng: POSITION.lng
+          }), function(res) {
+            if(res.success) {
+              
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        }
+      }
+
+      var init = {
+        productList: function(){
+          var data = JSON.parse(decodeURIComponent(pageInfo.products));
+          var arr = [];
+          var total = 0;
+          $.each(data, function(i, item){
+            total += item.price * item.count;
+            arr.push('<li class="clearfix" data="'+ item.id +'" num="1" price="29.8">'+
+              '<img src="'+ item.imgSrc +'" class="goods1">'+
+              '<div class="g-right">'+
+              '<div class="clearfix goods-title">'+
+              '<div class="fl">'+ item.name +'</div>'+
+              '<div class="fr">￥'+ (item.price).toFixed(2) +'</div>'+
+              '</div>'+
+              '<div class="clearfix goods-tips">'+
+              '<div class="fl">'+ item.desc +'</div>'+
+              '<div class="fr">x'+ item.count +'</div>'+
+              '</div></div></li>');
+            products.push({
+              id: parseInt(item.id),
+              count: item.count
+            });
+          });
+          $('.goods').html(arr.join(''));
+          $('#total1').text(total.toFixed(2));
+          $('#total2').text(data.length);
+        },
+        addressShow: function(data) {
+          $('.takeinfo1-text').html('<h1 class="fl cons">收货人：<span>'+ data.realname +
+            '</span></h1><h1 class="fr con_pho">'+ data.phone +'</h1>'+
+            '<p class="fl cons2">收货地址：<span>'+
+            data.province + data.city + data.district + data.address +
+            '</span></p>');
+          
+          $('.takeinfo input[name="consignee"]').val(data.realname);
+          $('.takeinfo input[name="phone"]').val(data.phone);
+          $('.takeinfo input[name="address_detail"]').val(data.address);
+        },
+        provinceShow: function(data){
+          var arr = ['<option value="00">省份</option>'];
+          $.each(data, function(i, item){
+            if (DEFAULT.id_province && item.id === DEFAULT.id_province){
+              arr.push('<option value="'+ item.id +'" selected="selected">'+ item.name +'</option>');
+            } else {
+              arr.push('<option value="'+ item.id +'">'+ item.name +'</option>');
+            }
+          });
+          $('#s_province').html(arr.join(''));
+        },
+        cityShow: function(data){
+          var arr = ['<option value="00">地级市</option>'];
+          $.each(data, function(i, item){
+            if (DEFAULT.id_city && item.id === DEFAULT.id_city){
+              arr.push('<option value="'+ item.id +'" selected="selected">'+ item.name +'</option>');
+            } else {
+              arr.push('<option value="'+ item.id +'">'+ item.name +'</option>');
+            }
+            $('#s_city').html(arr.join(''));
+          });
+        },
+        districtShow: function(data) {
+          var arr = ['<option value="00">区、县、县级市</option>'];
+          $.each(data, function(i, item){
+            if (DEFAULT.id_distrct && item.id === DEFAULT.id_distrct){
+              arr.push('<option value="'+ item.id +'" selected="selected">'+ item.name +'</option>');
+            } else {
+              arr.push('<option value="'+ item.id +'">'+ item.name +'</option>');
+            }
+            $('#s_county').html(arr.join(''));
+          });
+        },
+        bindEvent: function(){
+          var h = $(window).height();
+          $('body').css('height', h);
+
+          $('input,textarea').bind('click', function(e) {
+            var $this = $(this);
+            e.preventDefault();
+            setTimeout(function() {
+              $(window).scrollTop($this.offset().top - 10);
+            }, 200)
+          });
+
+          //物流编辑
+          $('.edit').on('click', function() {
+            $('.takeinfo1').hide();
+            $('.takeinfo2').hide();
+            $('.takeinfo').show();
+          });
+
+          //选择省份
+          $("#s_province").change(function() {
+            var val = $("#s_province option:selected").val();
+            if (val === '00') {
+              $('#s_city option[value=00]').get(0).selected = true;
+              $('#s_county option[value=00]').get(0).selected = true;
+              DEFAULT.id_province = null;
+            } else {
+              DEFAULT.id_province = val;
+            }
+            DEFAULT.id_city = null;
+            DEFAULT.id_distrct = null;
+            ajax.getCity(DEFAULT.id_province);
+          });
+          //选择县
+          $('#s_county').change(function(){
+            var val = $("#s_county option:selected").val();
+            if (val === '00') {
+              DEFAULT.id_province = null;
+            } else {
+              DEFAULT.id_province = val;
+            }
+          });
+          //选择城市
+          $("#s_city").change(function() {
+            var val = $("#s_city option:selected").val();
+            if (val === '00') {
+              $('#s_county option[value=00]').get(0).selected = true;
+            } else {
+              DEFAULT.id_distrct = val;
+            }
+          });
+
+          //物流地址填写完毕
+          $(".takeinfo-sure").on('click', function() {
+            //验证格式
+            var data = {};
+            var msg = '';
+            var consignee_reg = /[\u4E00-\u9FA5]{2,20}/; //判断是汉字
+
+            data.realname = $("input[name=consignee]").val();
+            data.provinceId = $("#s_province option:selected").val();
+            data.cityId = $("#s_city option:selected").val();
+            data.districtId = $("#s_county option:selected").val();
+            data.address = $("textarea[name=address_detail]").val();
+            data.phone = $("input[name=phone]").val();
+            data.isDefault = 1;
+
+            if(!(/^1[3|4|5|7|8]\d{9}$/.test(data.phone))) {
+              msg = '手机号格式不正确';
+            }
+            if(data.address.length < 4) {
+              msg = '详细地址格式不正确';
+            }
+            if(!consignee_reg.test(data.realname)) {
+              msg = '收货人名称格式不正确';
+            } else if(data.realname.length > 6) {
+              msg = '收货人名称长度不能超过6位';
+            }
+            if(data.districtId === '00' && $('#s_county option').length > 1 && $('#s_city option:selected').val() != '地级市') {
+              msg = '区、县、县级市未选择';
+            }
+            if(data.cityId === '00') {
+              msg = '地级市未选择';
+            }
+            if(data.provinceId === '00') {
+              msg = '省份未选择';
+            }
+            if(msg != '') {
+              alert(msg);
+            } else {
+              //更新地址信息
+              DEFAULT.province = $("#s_province option:selected").text();
+              DEFAULT.city = $("#s_city option:selected").text();
+              DEFAULT.district = $("#s_county option:selected").text();
+              DEFAULT.address = $("textarea[name=address_detail]").val();
+              ajax.addAddress(data);
+            }
+          });
+
+          // 提交订单
+          $("#order_add_submit").click(function() {
+            ajax.orderSubmit({
+              products: products,
+              comment: $('.remark').val(),
+              type: 1,
+              addressId: DEFAULT_ID
+            });
+          });
+        }
+      }
+
+      if (localStorage.getItem('position')) {
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        ajax.getDefaultAddr();
+        init.productList();
+        init.bindEvent();
+      } else {
+        mapPosition();
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        ajax.getDefaultAddr();
+        init.productList();
+        init.bindEvent();
+      }
+
+      $('.loading-html').css('opacity', 0);
+      setTimeout(function() {
+        $('.loading-html').hide();
+      }, 510);
+    })();   
+  </script>
+  <script>
+    //订单提交
+    /*
+    var could = 1;
+
+    $("#order_add_submit").click(function() {
+      // if(noRecUser == '1') {
+      //   alert('您没有推荐人，不能购买产品，请退出网站重新扫描推荐人二维码后购买');
+      //   return false;
+      // }
+      // if(data.s_province == '台湾省') {
+      //   alert('暂未开放台湾地区的购买');
+      //   return false;
+      // }
+      if(1 === could) {
+        could = 0;
+        if(data.istrue == 1) {
+          get_address();
+          delete data.istrue;
+          //地址判断//邮费
+          if(data.s_province === '韩国') {
+            data.travel_fee = 36;
+          } else {
+            data.travel_fee = 0;
+          }
+          //获取商品ID和数量
+          var goods = [];
+          $(".goods li").each(function(i) {
+            var item = {};
+            var dom_self = $(this);
+            item.type_id = dom_self.attr('data');
+            item.num = dom_self.attr('num');
+            goods[i] = item;
+          });
+          data.goods = goods;
+          if(data.goods.length > 0) {
+            //                    if(!confirm('目前仅支持银联支付，您确认下单？')){
+            //                        $('.loading-html').hide();
+            //                        data.istrue = 1;
+            //                        could = 1;
+            //                        return false;
+            //                    }
+            data.remark = $("textarea[name=remark]").val();
+            $('.loading-html').css('opacity', '0.8');
+            $('.loading-html').show();
+            createdOrder();
+            return false;
+            $.post('/bns2/cart_to_order', data, function(r) {
+              could = 1;
+              $('.loading-html').css('opacity', '0');
+              $('.loading-html').hide();
+              //跳转到网站fc_pay_confirm 确认购买
+              if(r.data) {
+                //从原购物车删除
+                $.post('/bns2/nfc_buycars', {
+                  type_id: data.goods,
+                  method: 'del_update'
+                }, function(res) {});
+                if(data.orderType == 'normal') {
+                  $("input[name=jspara]").val(r.data.jspara);
+                  $("input[name=out_trade_no]").val(r.data.out_trade_no);
+                  $("input[name=payprice]").val(r.data.payprice);
+                  $("input[name=other_postage]").val(r.data.other_postage);
+                  $("input[name=goodtitle]").val(r.data.goodtitle);
+                  $("input[name=order_id]").val(r.data.order_id);
+                  $("#pay_confirm").submit();
+                } else {
+                  $("input[name='integral_price']").val(r.data.price);
+                  $("input[name='integral_orderid']").val(r.data.order_id);
+                  $("#integral_pay_confirm").submit();
+                }
+              } else {
+                if(typeof r.content.msg !== 'undefined') {
+                  alert(r.content.msg);
+                } else {
+                  alert(r.msg);
+                }
+                $('.loading-html').hide();
+              }
+            });
+          } else {
+            could = 1;
+            alert("数据错误");
+          }
+        } else {
+          could = 1;
+          $('.takeinfo').show();
+          $('.takeinfo2').hide();
+          return false;
+        }
+      } else {
+        alert('请稍后...');
+      }
+    }); */
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "http://hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+
+      var fa = document.createElement("script");
+      fa.src = "src/js/fastclick.js";
+      var sfa = document.getElementsByTagName("script")[0];
+      sfa.parentNode.insertBefore(fa, sfa);
+    })();
+  </script>
+</body>
+
+</html>

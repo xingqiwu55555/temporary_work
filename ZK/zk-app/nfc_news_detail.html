@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>娅慧</title>
+<link href="./src/css/new-goods.css" rel="stylesheet">
+<link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script src="./src/js/jquery.min.js"></script>
+</head>
+
+<body>
+  <div class="loading-html" style="opacity: 0; display: none;">
+    <div class="loading-fixed">
+      <div class="loader loader--snake"></div>
+    </div>
+  </div>
+  <div class="news-container" style="overflow-x: hidden">
+    <!-- <h6>sdffsdf</h6>
+    <ul class="label-box">
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <img src="" alt="">
+    <div class="cont-text"></div> -->
+  </div>
+
+  <script>
+    window.lazySizesConfig = window.lazySizesConfig || {};
+    window.lazySizesConfig.loadMode = 1;
+    window.lazySizesConfig.init = false;
+  </script>
+  <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
+  <script src="./src/js/common.js"></script>
+  <script src="./src/js/lazysizes.min.js"></script>
+  <script src="./src/js/jquery.fly.min.js"></script>
+  <script>
+    $(function() {
+      var POSITION = null;
+      var token = window.localStorage.token;
+      var new_id = pageInfo.id;
+      var ajax = {
+        getDetail: function(){
+          $.api.get(serverUrlBase + '/base/article/'+ new_id, {}, function(res) {
+            if(res.success) {
+              initDetail(res.data.object);
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+        }
+      }
+
+      if (localStorage.getItem('position')) {
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        ajax.getDetail(); 
+      } else {
+        mapPosition();
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        ajax.getDetail(); 
+      }
+
+      function initDetail(data){  
+        $('.news-container').html('<h6>'+ data.title +'</h6>'+
+          '<ul class="label-box">'+
+            '<li class="time">'+ data.createTime +'</li>'+
+            '<li class="views">'+ data.readcount +'</li>'+
+          '</ul>'+
+          '<img src="'+ getResUrlFromPath(data.img) +'" alt="">'+
+          '<div class="cont-text">'+ data.content +'</div>');
+        
+      }
+    });
+
+    //图片开始加载
+    lazySizes.init();
+    $('.loading-html').css('opacity', 0);
+    setTimeout(function() {
+      $('.loading-html').hide();
+    }, 510);
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "http://hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</body>
+
+</html>

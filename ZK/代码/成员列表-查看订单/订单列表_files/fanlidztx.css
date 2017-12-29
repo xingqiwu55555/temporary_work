@@ -1,0 +1,117 @@
+
+body{
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    font-family: "Microsoft YaHei";
+    background: #f5f5f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+.container{width: 94.7%;
+    margin: auto;}
+.container ul li h2{float: left;}
+.fal_dz_sj{float: right;    line-height: 2em;color: #666;    font-size: 0.75em;}
+.clear {clear: both;}
+.container ul li{
+    background: #fff;border: 2px solid #e2e2e2;
+    padding: 10px;
+    margin-top: 4px;
+}
+.container h3{font-size: 1em;color: #333333;    font-weight: normal;    float: left;}
+.fl_je{
+    float: left;
+    width: 28%;
+    height: auto;
+    position: relative;
+;
+}
+.fl_je span{position: absolute;
+    left: 4%;    font-size: 0.6875em;
+    color: #fff;}
+.fl_je p{    position: absolute;
+    left: 25%;
+    top: 16%;
+    font-size:1.3125em;;
+    color: #fff;}
+.fl_je img{max-width: 100%;}
+.fl_ct_out{margin-top: 10px;}
+.fl_content {       float: left;    width: 70%;
+    padding-left: 4px; font-size: 0.8em;color:#555555;}
+/*加载效果*/
+
+.loader {
+    width: 45px;
+    height: 20px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 15px;
+position: relative;
+
+}
+@-webkit-keyframes loading-3{
+    0%{
+        left: 45px;
+        top: 0;
+    }
+    80%{
+        left: 0;
+        top: 0;
+    }
+    85%{
+        left: 0;
+        top: -10px;
+        width:6px;
+        height: 6px;
+    }
+    90%{
+        width: 6px;
+        height: 6px;
+    }
+    95%{
+        left: 45px;
+        top: -10px;
+        width: 6px;
+        height: 6px;
+    }
+    100%{
+        left: 45px;
+        top: 0;
+    }
+}
+.loading-3{
+    width: 40px;
+    height: 20px;
+    position: relative;
+}
+.loading-3 i{
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #bf2071;
+    margin-right: 10px;
+    position: absolute;
+}
+.loading-3 i:nth-child(1){
+    -webkit-animation:loading-3 2s linear 0s infinite;
+}
+.loading-3 i:nth-child(2){
+    -webkit-animation:loading-3 2s linear -0.4s infinite;
+}
+.loading-3 i:nth-child(3){
+    -webkit-animation:loading-3 2s linear -0.8s infinite;
+}
+.loading-3 i:nth-child(4){
+    -webkit-animation:loading-3 2s linear -1.2s infinite;
+}
+.loading-3 i:nth-child(5){
+    -webkit-animation:loading-3 2s linear -1.6s infinite;
+}

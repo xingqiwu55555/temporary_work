@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>购物车</title>
+<link href="./src/css/buycars.css" rel="stylesheet">
+<script src="./src/js/hm.js"></script>
+<script src="./src/js/jquery.min.js"></script>
+<script src="./src/js/countUp.js"></script>
+</head>
+
+<body>
+  <div class="loading-html-bak">
+    <div class="loader loader--snake"></div>
+  </div>
+  <div class="zhezhao1_choose">
+    <div class="sure-del">
+      <h6>提示</h6>
+      <p>确认删除所选商品？</p>
+      <div class="clearfix">
+        <div id="delate">取消</div>
+        <div id="sure">确认</div>
+      </div>
+    </div>
+    <div class="zhezhao2_choose">
+      <div class="sure-del2">
+        <div class="circle_wait">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <h6>提示</h6>
+        <p>正在排队中，请耐心等待</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="car-emt" style="display: block;">
+    <img src="./src/images/emt.png" class="emt">
+    <h5>购物车竟然是空的</h5>
+    <p>再忙，也要记得买点什么犒劳自己~</p>
+  </div>
+
+  <ul class="car-body">
+    <!--<li class="clearfix" data="4876441">
+      <div class="del-true"></div>
+      <div class="del">x</div>
+      <span class="no-choose"></span>
+      <img src="http://img.c.irunyan.com/img/choose.svg?v=292170" class="choose show-choose">
+      <a href="/bns2/nfc_good_detail?good_id=4876441">
+        <img src="http://img.c.irunyan.com/img/cleanser_small.jpg?v=2" class="goods-img">
+      </a>
+      <div class="car-right">
+        <div class="goods-title">娅慧玻尿酸洁面片</div>
+        <div class="goods-tips">一纸唤醒肌肤素颜之美！</div>
+        <div class="clearfix">
+          <div class="goods-price">￥<span class="single_price">29.8</span></div>
+          <div class="fr clearfix taocan" data="4876441">
+            <img src="http://img.c.irunyan.com/img/jian.jpg" class="fl jian">
+            <input class="fl val control_input" type="number" value="1" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+            <img src="http://img.c.irunyan.com/img/add.jpg" class="fl jia">
+          </div>
+        </div>
+      </div>
+    </li>-->
+    <li class="bag">
+    </li>
+  </ul>
+  <div class="cart-bottom clearfix">
+    <span class="no-choose"></span>
+    <img src="./src/images/choose.svg" class="choose">
+    <div class="all-choose">全选</div>
+    <div class="total">
+      <div>合计 <span class="total-price">￥<span id="total1">0.00</span></span>
+      </div>
+      <div>共<span id="total2">0</span>件</div>
+    </div>
+    <div class="share-btn" id="order_add_submit">结算</div>
+  </div>
+  <ul class="bottom clearfix">
+    <li>
+      <div onclick="location=&#39;index.html&#39;">
+        <img src="./src/images/menu.svg">
+        <p>商城</p>
+      </div>
+    </li>
+    <li>
+      <img src="./src/images/carr.svg">
+      <p class="active">购物车</p>
+    </li>
+    <li>
+      <div onclick="location=&#39;nfc_extension.html&#39;">
+        <img src="./src/images/tuiguang.svg">
+        <p>推广</p>
+      </div>
+    </li>
+    <li>
+      <div onclick="location=&#39;nfc_user.html&#39;">
+        <img src="./src/images/iwhite.svg">
+        <p>我的</p>
+      </div>
+    </li>
+  </ul>
+  <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=2423f0399906505f5ff497e6ffc60d53"></script>
+  <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
+  <script src="./src/js/common.js"></script>
+  <script type="application/javascript" src="./src/js/fastclick.js"></script>
+  <script type="text/javascript">
+    (function() {
+      var token = localStorage.getItem('token');
+      var POSITION = null;
+      var page = 1;
+      var total_page;
+      var carType = 'normal';
+      var DATA_LIST = [];
+      $('.warn').click(function() {
+        alert('请您先购买娅慧相关产品方可进入')
+      });
+      var ajax = {
+        getList: function() {
+          $.api.get(serverUrlBase + '/customer/' + token + '/cart/pager?page=' + page, {
+            lat: POSITION.lat,
+            lng: POSITION.lng
+          }, function(res) {
+            if(res.success) {
+              total_page = res.data.pager.totalPages;
+              if(res.data.pager.list.length) {
+                $('.car-emt').hide();
+                // DATA_LIST = res.data.pager.list;
+                init.dataList(res.data.pager.list);
+              } else {
+                $('.car-emt').show();
+              }
+              $('.loading-html').css('opacity', 0);
+              bind.normal();
+              bind.cart_event();
+              bind.other();
+              bind.total();
+              
+              setTimeout(function() {
+                $('.loading-html').hide();
+              }, 510);
+            } else {
+              alert(res.resultMsg);
+            }
+          })
+        },
+        deleteList: function(id) {
+          $.api.post(serverUrlBase + '/customer/' + token + '/cart/delete', {
+            lat: POSITION.lat,
+            lng: POSITION.lng,
+            productId: id
+          }, function(res) {
+            if(res.success) {
+              $('.car-body li[data="'+ id +'"]').remove();
+              bind.total();  
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+          $('.zhezhao1_choose').hide().removeClass('zhezhao1-show');
+          setTimeout(function() {
+            $('.zhezhao1_choose').show()
+          }, 500);
+          $('.sure-del').removeClass('sure-show');
+
+          var w = $('.car-body li').length;
+          if(w > 1) {
+            $('.car-emt').hide();
+          } else if(w = 1) {
+            $('.car-emt').show();
+          }
+        },
+        updateNumber: function(type, num, id, elem) {
+          $.api.post(serverUrlBase + '/customer/' + token + '/cart/update', {
+            lat: POSITION.lat,
+            lng: POSITION.lng,
+            quantity: num,
+            productId: id
+          }, function(res) {
+            if(res.success) { 
+              if (type === 'ADD') {
+                elem.siblings('input').val(num);
+              } else if (type === 'REDUCE') {
+                elem.prev().val(num);
+              } else {
+                setTimeout(function() {
+                  $("#order_add_submit").attr("isclick", "ok");
+                  $('.loading-html-bak').css('display', 'none');
+                }, 200);
+              }
+              bind.total();
+            } else {
+              alert(res.resultMsg);
+            }
+          });
+          $('.loading-html-bak').css('display', 'none');
+        },
+        queue_wait: function() {
+          $.post('/bns2/nfc_buycars', {
+            key: '3879841'
+          }, function(res) {
+            if(res.status == 'no') {
+              $('.zhezhao2_choose').addClass('zhezhao2-show');
+              $('.sure-del2').addClass('sure-show2');
+              setTimeout(function() {
+                console.log('s');
+                queue_wait();
+              }, 10000);
+            } else {
+              $("#order_add_submit").unbind('click');
+              $("#order_add_submit").bind('click', carToOrder);
+              $("#order_add_submit").click();
+            }
+          }).error(function() {
+            alert('网络拥挤，请稍后再试');
+          });
+        }
+      }
+
+      var init = {
+        html: function() {
+          ajax.getList();
+        },
+        dataList: function(data) { //初始化列表
+          var arr = [];
+          $.each(data, function(i, item) {
+            var choose_cls = item.isChecked ? 'show-choose' : '';
+            arr.push('<li class="clearfix" data="' + item.productId + '">' +
+              '<div class="del-true"></div>' +
+              '<div class="del">x</div>' +
+              '<span class="no-choose"></span>' +
+              '<img src="src/images/choose.svg" class="choose ' + choose_cls + '">' +
+              '<a href="nfc_good_detail.html?good_id=' + item.productId + '">' +
+              '<img src="' + getResUrlFromPath(item.mainImage) + '" class="goods-img">' +
+              '</a>' +
+              '<div class="car-right">' +
+              '<div class="goods-title">' + item.productName + '</div>' +
+              '<div class="goods-tips">' + item.merchantName + '</div>' +
+              '<div class="clearfix">' +
+              '<div class="goods-price">￥<span class="single_price">' + Utils.format.money(item.price) + '</span></div>' +
+              '<div class="fr clearfix taocan" data="' + item.productId + '">' +
+              '<img src="src/images/jian.jpg" class="fl jian">' +
+              '<input class="fl val control_input" type="number" value="' + item.quantity + '" onkeyup="this.value=this.value.replace(/\D/g,"")" onafterpaste="this.value=this.value.replace(/\D/g,"")">' +
+              '<img src="src/images/add.jpg" class="fl jia">' +
+              '</div></div></div></li>');
+          });
+          $('.car-body .bag').before(arr.join(''));
+        },
+        carToOrder: function() {
+          var data = [];
+          $('.car-body li').each(function() {
+            var dom_self = $(this);
+            if(dom_self.find('.choose').hasClass('show-choose')) {
+              var id = dom_self.attr('data');
+              var count = parseFloat(dom_self.find('input').val());
+              var img = dom_self.find('.goods-img').attr('src');
+              var name = dom_self.find('.goods-title').text();
+              var price = parseFloat(dom_self.find('.single_price').text());
+              var desc = dom_self.find('.goods-tips').text();
+              data.push({
+                id: id,
+                count: count,
+                imgSrc: img,
+                name: name,
+                desc: desc,
+                price: price
+              });
+            }
+          });
+          if (data.length) {
+            window.location.href = 'nfc_buy_orderdetail.html?products=' + encodeURIComponent(JSON.stringify(data));
+          } else {
+            alert('您未选中任何商品')
+          }
+        }
+      }
+      var bind = {
+        normal: function() {
+          $("#order_add_submit").bind('click', init.carToOrder);
+
+          $('.car-body .no-choose').click(function() {
+            $(this).siblings('.choose').addClass('show-choose');
+            var flag = 1;
+            $('.car-body').children('li').each(function() {
+              if(!($(this).find('img').eq(0).hasClass('show-choose'))) {
+                flag = 0;
+              }
+            });
+            if(flag == 1) {
+              $('.cart-bottom .choose').addClass('show-choose');
+            } else {
+              $('.cart-bottom .choose').removeClass('show-choose');
+            }
+            bind.total();
+          });
+
+          $('.car-body .choose').click(function() {
+            $(this).removeClass('show-choose');
+            $('.cart-bottom .choose').removeClass('show-choose');
+            bind.total();
+          });
+          $('.cart-bottom .no-choose').click(function() {
+            $('.choose').addClass('show-choose');
+            bind.total();
+          });
+
+          $('.cart-bottom .choose').click(function() {
+            $('.choose').removeClass('show-choose');
+            bind.total();
+          });
+
+          $('.car-body .del').click(function(){
+            var id = $(this).parent().attr('data');
+            $('.zhezhao1_choose').addClass('zhezhao1-show').show().attr('data', id);
+            $('.sure-del').addClass('sure-show');
+          });
+
+          $('#delate').click(function() {
+            $('.zhezhao1_choose').hide().removeClass('zhezhao1-show');
+            $('.sure-del').removeClass('sure-show');
+            setTimeout(function() {
+              $('.zhezhao1_choose').show()
+            }, 500)
+          });
+
+          $('#sure').click(function() {
+            var type_id = $('.zhezhao1_choose').attr('data');
+            ajax.deleteList(type_id);
+          });
+
+          $('input,textarea').bind("focus", function() {
+            $(".cart-bottom").css({
+              "position": "static",
+              "bottom": "45px"
+            });
+          }).bind("blur", function() {
+            $(".cart-bottom").css("position", "fixed");
+          });
+        },
+        cart_event: function() {
+          //加减改变数量
+          $('.car-body').on('touchstart', '.jia', function(e) {
+            var that = this;
+            if($(that).prev().val() == '') {
+              $(that).prev().val('0');
+            }
+            var rs = parseInt($(this).prev().val());
+            var type_id = $(this).parent().attr('data');
+            var num = rs + 1;
+            ajax.updateNumber('REDUCE', num, type_id, $(that));
+          });
+          $('.car-body').on('touchstart', '.jian', function(e) {
+            var that = this;
+            if($(that).siblings('input').val() == '') {
+              $(that).siblings('input').val('1');
+            }
+            var rs = parseInt($(this).siblings('input').val());
+            var type_id = $(this).parent().attr('data');
+            var num = 0;
+            if(rs - 1 <= 1) {
+              num = 1;
+            } else {
+              num = parseInt(rs) - 1;
+            }
+            if(rs != num) {
+              $('.loading-html-bak').css('display', 'block');
+              ajax.updateNumber('ADD', num, type_id, $(that));
+            }
+          });
+        },
+        other: function() {
+          var old_num = 0;
+          //获得焦点将这个值记录下来
+          $('.taocan input').focus(function() {
+            $("#order_add_submit").css("background", "#c7c7c7");
+            $("#order_add_submit").attr("isclick", "no");
+            old_num = $(this).val();
+          });
+          //输入数量时改变价格
+          $('.taocan input').blur(function() {
+            $("#order_add_submit").css("background", "#bf2071");
+            var type_id = $(this).parent().attr('data');
+            if($(this).val() == '') {
+              $(this).val(old_num);
+            }
+            var num = $(this).val();
+            if(old_num != num) {
+              $('.loading-html-bak').css('display', 'block');
+              ajax.updateNumber('UPDATE', num, type_id, 1);
+            } else {
+              $("#order_add_submit").attr("isclick", "ok");
+            }
+            old_num = 0;
+          });
+        },
+        total: function() {
+          var s1 = 0;
+          var s2 = 0;
+          var single_price = $('.single_price');
+          //在这和数据库同步
+
+          $('.car-body li').each(function(i) {
+            if($(this).find('input').val() == '') {
+              s1 = parseFloat(s1);
+              s2 = parseFloat(s2);
+            } else {
+              if($(this).children('.choose').hasClass('show-choose')) {
+                s1 = parseFloat(s1 + parseFloat($(this).find('input').val()) * parseFloat($(this).find('.single_price').text()));
+                s2 = parseFloat(s2 + parseFloat($(this).find('input').val()));
+              }
+            }
+          });
+          $("#total1").html(s1.toFixed(2));
+          $("#total2").html(s2.toFixed(0));
+        }
+      }
+      
+      if (localStorage.getItem('position')) {
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        init.html();
+      } else {
+        mapPosition();
+        POSITION = JSON.parse(localStorage.getItem('position'));
+        init.html();
+      }
+    })();
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "http://hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</body>
+
+</html>

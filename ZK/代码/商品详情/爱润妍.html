@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)http://c.irunyan.com/bns2/nfc_good_detail?good_id=4636030 -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>爱润妍</title>
+<link href="./爱润妍_files/new-goods.css" rel="stylesheet">
+<link href="./爱润妍_files/font-awesome.min.css" rel="stylesheet">
+<!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script src="./爱润妍_files/hm.js.下载"></script><script src="./爱润妍_files/jquery.min.js.下载"></script>
+<script src="./爱润妍_files/area.js.下载"></script>
+</head>
+<body>
+<div class="loading-html" style="opacity: 0; display: none;">
+<div class="loading-fixed">
+<div class="loader loader--snake"></div>
+</div>
+</div>
+<div class="container" style="overflow-x: hidden">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/1.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/1.jpg">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/2.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/2.jpg">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/3.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/3.jpg">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/4.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/4.jpg">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/5.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/5.jpg">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/6.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/6.jpg">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/7.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/7.jpg">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/8.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/8.jpg">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/9.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/9.jpg">
+<img data-sizes="auto" data-src="http://img.c.irunyan.com/img/4636030/10.jpg" style="min-height:1px;" class="good-body lazyautosizes lazyloaded" sizes="414px" src="./爱润妍_files/10.jpg">
+<ul class="goods_bottom clearfix">
+<li class="clearfix small-li"><div class="price clearfix">
+<div class="price-top"><s>原价￥
+298
+</s></div>
+<div class="price-bot">￥29.8</div>
+</div></li>
+<li class="big-li"> <button class="add-to-cart" type="content">加入购物车</button></li>
+<li class="small-li clearfix">
+<a href="http://c.irunyan.com/bns2/nfc_buycars">
+<img src="./爱润妍_files/carg.svg" class="car">
+<div class="num">0</div>
+<div class="nam">购物车</div>
+</a>&gt;
+</li>
+</ul>
+<img src="./爱润妍_files/moisturizer2.jpg" class="hide">
+</div>
+
+<script>
+    window.lazySizesConfig = window.lazySizesConfig || {};
+    window.lazySizesConfig.loadMode = 1;
+    window.lazySizesConfig.init = false;
+</script>
+<script src="./爱润妍_files/lazysizes.min.js.下载"></script>
+<script src="./爱润妍_files/jquery.fly.min.js.下载"></script>
+<script>
+    $(function(){
+            var offset = $(".car").offset();
+            $(".add-to-cart").click(function(event) {
+                var type = $(this).attr('type');
+                if('1' != '1') return;
+                var caroffset = $(this).offset();
+                var cary = $(this).offset().top-$(document).scrollTop();
+                var carty= $(".car").offset().top-$(document).scrollTop();
+                var img = $('.hide').attr('src'); //获取当前点击图片链接
+                var flyer = $('<img class="flyer-img" src="' + img + '">'); //抛物体对象
+
+                $.post('/bns2/nfc_buycars',{type_id:4636030,method:'add',type:type},function(res){
+                    var res = JSON.parse(res);
+                    if(res.status == 'ok'){
+                        flyer.fly({
+                            start: {
+                                left: caroffset.left+15,//抛物体起点横坐标
+                                top: cary //抛物体起点纵坐标
+                            },
+                            end: {
+                                left: offset.left+25,//抛物体终点横坐标
+                                top: carty+18, //抛物体终点纵坐标
+                                width: 0,height: 0
+                            },
+                            onEnd: function() {
+                                this.destory(); //销毁抛物体
+                            }
+                        });
+                        var newnum=parseInt($('.num').text())+1;
+                        setTimeout(function () {
+                            $('.num').html(newnum);
+                        }, 500);
+                    }else{
+                        alert(res.msg);
+                    }
+                });
+
+        });
+if('1' != '1'){
+    $('.add-to-cart').css('background','#949494');
+    if('1' == '-1'){
+        $('.add-to-cart').html('即将开售');
+    }else{
+        $('.add-to-cart').html('即将开售');
+    }
+}
+var type_id = '4636030';
+if(type_id==27348){
+    $('.container,body').css('background','#e2e2e2')
+}
+ else if(type_id==14982){
+    $('.container,body').css('background','#f2f2f2')
+}
+else if(type_id==27386){
+    $('.container,body').css('background','#000')
+}
+else if(type_id==239687){
+    $('.container,body').css('background','#f9f3dd')
+}else if(type_id==1142981){
+    $('.container,body').css('background','#fff')
+}else if(type_id==2242642){
+    $('.container,body').css('background','#e5e5e5')
+}else if(type_id==2259393){
+    $('.container,body').css('background','#e5e5e5')
+}else if(type_id==2262535){
+    $('.container,body').css('background','#e5e5e5')
+}else if(type_id==2718441){
+    $('.container,body').css('background','#f9f3dd')
+}
+
+    });
+
+                                                                                        
+    //图片开始加载
+    lazySizes.init();
+    $('.loading-html').css('opacity',0);
+    setTimeout(function(){
+      $('.loading-html').hide();
+    },510);
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                </script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body></html>

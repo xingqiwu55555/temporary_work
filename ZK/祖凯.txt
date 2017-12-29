@@ -1,0 +1,31 @@
+
+17090028043 
+samuel,123
+
+samuel,123
+
+13582898630
+
+http://c.irunyan.com/bns2/nfc_buy_orderdetail
+
+git@c2.samuelzuuka.com:csm-front.git
+
+接口文档：
+http://www.xiaoyaoji.cn/share/v0GGPv6fQ/yEpvzr7Gu?password=samuel,123
+
+products=[{"id":"72","count":1}]
+
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=2423f0399906505f5ff497e6ffc60d53"></script>
+
+
+
+admin
+samuel,123
+
+1. 待付款
+2. 付款成功
+3.付款失败
+4. 已发货
+5.已收货
+6已完成
+

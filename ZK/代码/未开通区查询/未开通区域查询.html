@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://c.irunyan.com/bns2/nfc_show_agent -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>未开通区域查询</title>
+<link rel="stylesheet" href="./未开通区域查询_files/bootstrap.min.css">
+<script src="./未开通区域查询_files/jquery.min.js.下载"></script>
+<script src="./未开通区域查询_files/bootstrap.min.js.下载"></script>
+<style type="text/css">
+        select{
+            margin-top: 10px;
+        }
+        .confirm{
+            margin-left: 10px;
+            margin-top: 10px
+        }
+        th{text-align: center;}
+        td{text-align: center;}
+        .loading-html {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: #fff;
+            z-index: 99999;
+            opacity: 0.8;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+        }
+        .loading-fixed {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background: #fff;
+            z-index: 99999;
+        }
+        .loader--snake {
+            width: 0.65em;
+            height: 0.65em;
+            border-radius: 50%;
+            -webkit-transform: translate(-4.125em);
+            box-shadow: 1.375em 0em #c5b061, 1.375em 0em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 2.75em 0.29721em #c5b061, 2.75em -0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 4.125em 0.18368em #c5b061, 4.125em -0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 5.5em -0.18368em #c5b061, 5.5em 0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 6.875em -0.29721em #c5b061, 6.875em 0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52);
+            -webkit-animation: snake 2s linear infinite;
+        }
+        .loader {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+        tbody>tr:hover{
+            background-color: #eaeaea;
+        }
+        @-webkit-keyframes snake {
+            0% {
+                box-shadow: 2.125em 0em #c5b061, 1.375em 0em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 3.125em 0.29721em #c5b061, 2.75em -0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 4.125em 0.18368em #c5b061, 4.125em -0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 5.125em -0.18368em #c5b061, 5.5em 0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 6.125em -0.29721em #c5b061, 6.875em 0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52);
+            }
+            20% {
+                box-shadow: 2.125em 0.29721em #c5b061, 1.375em -0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 3.125em 0.18368em #c5b061, 2.75em -0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 4.125em -0.18368em #c5b061, 4.125em 0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 5.125em -0.29721em #c5b061, 5.5em 0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 6.125em 0.0em #c5b061, 6.875em 0.0em 0.625em -0.3125em rgba(0, 0, 0, 0.52);
+            }
+            40% {
+                box-shadow: 2.125em 0.18368em #c5b061, 1.375em -0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 3.125em -0.18368em #c5b061, 2.75em 0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 4.125em -0.29721em #c5b061, 4.125em 0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 5.125em 0.0em #c5b061, 5.5em 0.0em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 6.125em 0.29721em #c5b061, 6.875em -0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52);
+            }
+            60% {
+                box-shadow: 2.125em -0.18368em #c5b061, 1.375em 0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 3.125em -0.29721em #c5b061, 2.75em 0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 4.125em 0.0em #c5b061, 4.125em 0.0em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 5.125em 0.29721em #c5b061, 5.5em -0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 6.125em 0.18368em #c5b061, 6.875em -0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52);
+            }
+            80% {
+                box-shadow: 2.125em -0.29721em #c5b061, 1.375em 0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 3.125em 0.0em #c5b061, 2.75em 0.0em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 4.125em 0.29721em #c5b061, 4.125em -0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 5.125em 0.18368em #c5b061, 5.5em -0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 6.125em -0.18368em #c5b061, 6.875em 0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52);
+            }
+            100% {
+                box-shadow: 2.125em 0.0em #c5b061, 1.375em 0.0em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 3.125em 0.29721em #c5b061, 2.75em -0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 4.125em 0.18368em #c5b061, 4.125em -0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 5.125em -0.18368em #c5b061, 5.5em 0.18368em 0.625em -0.3125em rgba(0, 0, 0, 0.52), 6.125em -0.29721em #c5b061, 6.875em 0.29721em 0.625em -0.3125em rgba(0, 0, 0, 0.52);
+            }
+        }
+
+    </style>
+</head>
+<body style="overflow-x:hidden;">
+<div class="loading-html" style="display: none;">
+<div class="loading-fixed">
+<div class="loader loader--snake"></div>
+</div>
+</div>
+<form class="form-inline" role="form" style="margin:10px;">
+<select id="s_province" class="btn btn-default dropdown-toggle" name="s_province"><option value="省份">省份</option><option value="北京市">北京市</option><option value="天津市">天津市</option><option value="上海市">上海市</option><option value="重庆市">重庆市</option><option value="河北省">河北省</option><option value="山西省">山西省</option><option value="内蒙古">内蒙古</option><option value="辽宁省">辽宁省</option><option value="吉林省">吉林省</option><option value="黑龙江省">黑龙江省</option><option value="江苏省">江苏省</option><option value="浙江省">浙江省</option><option value="安徽省">安徽省</option><option value="福建省">福建省</option><option value="江西省">江西省</option><option value="山东省">山东省</option><option value="河南省">河南省</option><option value="湖北省">湖北省</option><option value="湖南省">湖南省</option><option value="广东省">广东省</option><option value="广西">广西</option><option value="海南省">海南省</option><option value="四川省">四川省</option><option value="贵州省">贵州省</option><option value="云南省">云南省</option><option value="西藏">西藏</option><option value="陕西省">陕西省</option><option value="甘肃省">甘肃省</option><option value="青海省">青海省</option><option value="宁夏">宁夏</option><option value="新疆">新疆</option><option value="香港">香港</option><option value="澳门">澳门</option><option value="台湾省">台湾省</option><option value="韩国">韩国</option></select>
+<select id="s_city" class="btn btn-default dropdown-toggle" name="s_city"><option value="地级市">地级市</option></select>
+<select id="s_county" class="btn btn-default dropdown-toggle hidden" name="s_county"><option value="区、县、县级市">区、县、县级市</option></select>
+<div class="btn btn-primary confirm" onclick="submitData()">确定</div>
+</form>
+<table class="table" style="padding-left: 10px">
+<thead>
+<tr>
+<th>省</th>
+<th>市</th>
+<th>县</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+<script>
+    var data = {};
+    $('.loading-html').hide();
+    function submitData(){
+        data.areaList = [];
+        data.province = $('#s_province').val();
+        data.city = $('#s_city').val();
+        data.county = $('#s_county').val();
+        if(data.province === '省份'){
+            $('#s_province option').each(function(){
+                data.areaList.push($(this).val());
+            });
+            data.areaList.splice(0,1);
+        }else if(data.city === '地级市'){
+            $('#s_city option').each(function(){
+                data.areaList.push($(this).val());
+            });
+            data.areaList.splice(0,1);
+        }else{
+            $('#s_county option').each(function(){
+                data.areaList.push($(this).val());
+            });
+            data.areaList.splice(0,1);
+        }
+        $('.loading-html').show();
+        $.post('',data,function(r){
+            var html = '';
+            $('tbody').html('');
+            $('.loading-html').hide();
+            for(var i=0;i<r.length;i++) {
+               html += "<tr><td>"+r[i]['province']+"</td><td>"+r[i]['city']+"</td><td>"+r[i]['county']+"</td>";
+               html += r[i]['status']==1 ? "<td style='color:red'>有代理":"<td  style='color:#000'>无代理";
+               html += "</td></tr>";
+            }
+            $('tbody').html(html);
+        });
+        return false;
+    }
+</script>
+<script src="./未开通区域查询_files/area.js.下载"></script>
+<script>
+    window.onload = function () {
+        _init_area();
+    }
+</script>
+
+</body></html>

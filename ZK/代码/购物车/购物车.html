@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)http://c.irunyan.com/bns2/nfc_buycars -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<title>购物车</title>
+<link href="./购物车_files/buycars.css" rel="stylesheet">
+<script src="./购物车_files/hm.js.下载"></script><script src="./购物车_files/jquery.min.js.下载"></script>
+<script src="./购物车_files/countUp.js.下载"></script>
+</head>
+<body>
+<div class="loading-html-bak">
+<div class="loader loader--snake"></div>
+</div>
+<div class="zhezhao_choose">
+<img src="./购物车_files/share.png" class="share">
+<div class="takeshare-num">
+<div class="takeshare-num-det" align="center" id="sum_user">12345</div>
+<div class="takeshare-num-info" align="center">今日已领取</div>
+</div>
+<div class="takeshare-show">
+<div class="takeshare-show-info" align="center">
+<p>张**(手机150****3851)3秒前 成功领取</p>
+<p>李**(手机151****9657)18秒前 成功领取</p>
+<p>孙**(手机153****7534)35秒前 成功领取</p>
+<p>陈**(手机135****4287)39秒前 成功领取</p>
+<p>陈**(手机132****9877)52秒前 成功领取</p>
+<p>齐**(手机133****5532)1分钟前 成功领取</p>
+<p>吕**(手机139****7525)1分钟前 成功领取</p>
+<p>刘**(手机155****7783)1分钟前 成功领取</p>
+<p>胡**(手机186****8287)2分钟前 成功领取</p>
+<p>武**(手机186****9831)2分钟前 成功领取</p>
+<p>成**(手机189****5692)2分钟前 成功领取</p>
+<p>夏**(手机136****3657)2分钟前 成功领取</p>
+<p>王**(手机130****5672)2分钟前 成功领取</p>
+<p>文**(手机138****3939)3分钟前 成功领取</p>
+<p>吴**(手机155****5012)3分钟前 成功领取</p>
+<p>朱**(手机183****1661)3分钟前 成功领取</p>
+<p>徐**(手机186****5312)4分钟前 成功领取</p>
+<p>梁**(手机182****4211)5分钟前 成功领取</p>
+<p>董**(手机150****9919)5分钟前 成功领取</p>
+<p>卜**(手机185****7626)5分钟前 成功领取</p>
+<p>袁**(手机186****5255)6分钟前 成功领取</p>
+<p>于**(手机186****5655)6分钟前 成功领取</p>
+</div>
+</div>
+</div>
+<div class="zhezhao1_choose">
+<div class="sure-del">
+<h6>提示</h6>
+<p>确认删除所选商品？</p>
+<div class="clearfix">
+<div id="delate">取消</div>
+<div id="sure">确认</div>
+</div>
+</div>
+<div class="zhezhao2_choose">
+<div class="sure-del2">
+<div class="circle_wait">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+<h6>提示</h6>
+<p>正在排队中，请耐心等待</p>
+</div>
+</div>
+</div>
+<div class="car-emt" style="display: block;">
+<img src="./购物车_files/emt.png" class="emt">
+<h5>购物车竟然是空的</h5>
+<p>再忙，也要记得买点什么犒劳自己~</p>
+</div>
+<ul class="car-body">
+<li class="bag">
+</li>
+</ul>
+<form id="subform" action="http://c.irunyan.com/bns2/nfc_buy_orderdetail" method="post" style="display: none">
+</form>
+<div class="cart-bottom clearfix">
+<span class="no-choose"></span>
+<img src="./购物车_files/choose.svg" class="choose">
+<div class="all-choose">全选</div>
+<div class="total">
+<div>合计 <span class="total-price">￥<span id="total1">0.00</span></span></div>
+<div>共<span id="total2">0</span>件</div>
+</div>
+<div class="share-btn" id="order_add_submit">结算</div>
+</div>
+<ul class="bottom clearfix">
+<li>
+<div onclick="location=&#39;/&#39;">
+<img src="./购物车_files/menu.svg">
+<p>商城</p>
+</div>
+</li>
+<li>
+<img src="./购物车_files/carr.svg">
+<p class="active">购物车</p>
+</li>
+<li>
+<div onclick="location=&#39;/bns2/nfc_extension&#39;">
+<img src="./购物车_files/tuiguang.svg">
+<p>推广</p></div>
+</li>
+<li>
+<div onclick="location=&#39;/bns2/nfc_user&#39;">
+<img src="./购物车_files/iwhite.svg">
+<p>我的</p>
+</div>
+</li>
+</ul>
+
+<script type="application/javascript" src="./购物车_files/fastclick.js.下载"></script>
+<script type="text/javascript">
+  var w=$('.car-body li').length;
+  if(w>1){
+    $('.car-emt').hide();
+  }else if(w=1){
+    $('.car-emt').show();
+  }
+
+  $('.loading-html').css('opacity', 0);
+  setTimeout(function () {
+    $('.loading-html').hide();
+  }, 510);
+
+                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                                                            </script>
+<script>
+    //强制取消焦点
+//    $('input').attr({'disabled':'disabled','readonly':'readonly'}).blur();
+    var carType = 'normal';
+    $('.warn').click(function () {
+        alert('请您先购买爱润妍相关产品方可进入')
+    });
+    function carToOrder() {
+        var data = [];
+        var num = 0;
+        $('.car-body li').each(function () {
+            var item = {};
+            var dom_self = $(this);
+            if(dom_self.find('.choose').hasClass('show-choose')){
+                item.type_id  = dom_self.attr('data');
+                item.num = parseFloat(dom_self.find('input').val());
+                data[num] = item;
+                num ++;
+            }
+        });
+        if(num > 0 ) {
+//            $('.loading-html-bak').css('display', 'block');
+//            $('.loading-html-bak').show();
+//
+
+            for (var i = 0; i < num; i++){
+                $('#subform').append("<input type='text' name= "+data[i].type_id+" value="+data[i].num+" hidden='hidden'>");
+            }
+            $('#subform').append("<input type='text' name= 'orderType' value="+carType+" hidden='hidden'>");
+            $('#subform').submit();
+
+//            $.post('/bns2/nfc_buy_orderdetail',{data:data,order:'yes'},function(res){
+////                console.info(res);
+//                $('.loading-html-bak').css('display', 'none');
+//                res = JSON.parse(res);
+//                if(res.state == 'ok'){
+//                    location.href = '/bns2/nfc_buy_orderdetail';
+//                }
+//                else
+//                {
+//                    alert(res.msg);
+//                    $('.loading-html-bak').css('display', 'block');
+//                    $('.loading-html-bak').show();
+//                }
+                /*else{
+                    $('.zhezhao_choose').show().addClass('zhezhao-show');
+                    $('html').addClass('alpha');
+                    wtop = -20;
+                    wnum = 0;
+                    function wordmove() {
+                        $('.takeshare-show-info').css('top', wtop);
+                        $('.takeshare-show-info').children('p').eq(wnum).clone().appendTo('.takeshare-show-info');
+                        wtop = wtop - 20;
+                        wnum = wnum + 1;
+                    }
+                    wordmove();
+                    setInterval(function () {
+                        wordmove();
+                    }, 1500);
+                    (function () {
+                        // 统计数值滚动
+                        var options = {
+                            useEasing: true,
+                            useGrouping: true,
+                            separator: ',',
+                            decimal: '.',
+                            prefix: '',
+                            suffix: ''
+                        };
+                        var sum_user = new CountUp("sum_user", 0, 12345, 0, 2.5, options);
+                        sum_user.start();
+                    })();
+                }*/
+//            });
+        }else {
+            alert('您未选中任何商品')
+        }
+    };
+
+    function queue_wait(){
+      $.post('/bns2/nfc_buycars',{key:'3879841'},function(res){
+        if(res.status == 'no'){
+            $('.zhezhao2_choose').addClass('zhezhao2-show');
+            $('.sure-del2').addClass('sure-show2');
+            setTimeout(function(){
+                console.log('s');
+                queue_wait();
+            },10000);
+        }else{
+            $("#order_add_submit").unbind('click');
+            $("#order_add_submit").bind('click',carToOrder);
+            $("#order_add_submit").click();
+        }
+      }).error(function(){
+        alert('网络拥挤，请稍后再试');
+      });
+    }
+    $(function () {
+        $("#order_add_submit").bind('click',queue_wait);
+        $('.zhezhao_choose').click(function () {
+            $('.zhezhao_choose').hide().removeClass('zhezhao-show');
+            $('html').removeClass('alpha');
+        });
+//        if(!($('.car-body').find('clearfix'))){
+//            $('.kong').css("display","block");
+//        }
+
+        $('.car-body .no-choose').click(function () {
+            $(this).siblings('.choose').addClass('show-choose');
+            var flag=1;
+            $('.car-body').children('li').each(function(){
+                if(!($(this).find('img').eq(0).hasClass('show-choose'))){
+                    flag=0;
+                }
+            });
+            if(flag==1){
+                $('.cart-bottom .choose').addClass('show-choose');
+            }else{
+                $('.cart-bottom .choose').removeClass('show-choose');
+            }
+            total();
+        });
+
+        $('.car-body .choose').click(function () {
+            $(this).removeClass('show-choose');
+            $('.cart-bottom .choose').removeClass('show-choose');
+            total();
+        });
+        $('.cart-bottom .no-choose').click(function () {
+            $('.choose').addClass('show-choose');
+            total();
+        });
+
+        $('.cart-bottom .choose').click(function () {
+            $('.choose').removeClass('show-choose');
+            total();
+        });
+
+        $('.del-true').click(function () {
+            var self = $(this);
+            var type_id = self.parent().attr('data');
+            $('.zhezhao1_choose').addClass('zhezhao1-show');
+            $('.sure-del').addClass('sure-show');
+            $('#delate').unbind('click');
+            $('#sure').unbind('click');
+//            if (confirm("是否删除商品") == true) {
+//                $('.loading-html-bak').css('display', 'block');
+//                $.post('/bns2/nfc_buycars', {type_id: type_id, method: 'del'}, function (r) {
+//                    r = JSON.parse(r);
+//                    if (r.status == 'ok') {
+//                        self.parent().remove();
+//                        total();
+//                    } else {
+//                        alert(r.msg);
+//                    }
+//                    $('.loading-html-bak').css('display', 'none');
+//                });
+//            }
+            $('#delate').click(function () {
+                $('.zhezhao1_choose').hide().removeClass('zhezhao1-show');
+                $('.sure-del').removeClass('sure-show');
+                setTimeout(function () {
+                    $('.zhezhao1_choose').show()
+                },500)
+            });
+            $('#sure').click(function () {
+//                $('.loading-html-bak').css('display', 'block');
+                $.post('/bns2/nfc_buycars', {type_id: type_id, method: 'del'}, function (r) {
+                    r = JSON.parse(r);
+                    if (r.status == 'ok') {
+                        self.parent().remove();
+                        total();
+                    } else {
+                        alert(r.msg);
+                    }
+
+                    $('.zhezhao1_choose').hide().removeClass('zhezhao1-show');
+                    setTimeout(function () {
+                        $('.zhezhao1_choose').show()
+                    },500);
+                    $('.sure-del').removeClass('sure-show');
+
+
+                    var w=$('.car-body li').length;
+                    if(w>1){
+                        $('.car-emt').hide();
+                    }else if(w=1){
+                        $('.car-emt').show();
+                    }
+                });
+            });
+        });
+
+        //排队等待弹窗
+//        $('.share-btn').click(function () {
+//            $('.zhezhao2_choose').addClass('zhezhao2-show');
+//            $('.sure-del2').addClass('sure-show2');
+//        });
+
+
+        $('input,textarea').bind("focus", function () {
+            $(".cart-bottom").css({"position": "static", "bottom": "45px"});
+        }).bind("blur", function () {
+            $(".cart-bottom").css("position", "fixed");
+        });
+
+        function bind_cart_event() {
+            //加减改变数量
+            $('.taocan').on('touchstart', '.jia', function (e) {
+                var that = this;
+                if ($(that).prev().val() == '') {
+                    $(that).prev().val('0');
+                }
+                var rs = parseInt($(this).prev().val());
+                var type_id = $(this).parent().attr('data');
+                var num = rs + 1;
+                if(type_id == 3691875){
+                    $(that).prev().val(num);
+                    total();
+                    return;
+                }
+                $('.loading-html-bak').css('display', 'block');
+                $.post('/bns2/nfc_buycars', {type_id: type_id, num: num, method: 'update'}, function (r) {
+                    r = JSON.parse(r);
+                    if (r.status == 'ok') {
+                        $(that).prev().val(num);
+                        total();
+                    } else {
+                        alert(r.msg);
+                    }
+                    $('.loading-html-bak').css('display', 'none');
+                });
+            });
+            $('.taocan').on('touchstart', '.jian', function (e) {
+                var that = this;
+                if ($(that).siblings('input').val() == '') {
+                    $(that).siblings('input').val('1');
+                }
+                var rs = parseInt($(this).siblings('input').val());
+                var type_id = $(this).parent().attr('data');
+                var num = 0;
+                if (rs - 1 <= 1) {
+                    num = 1;
+                } else {
+                    num = parseInt(rs) - 1;
+                }
+                if(type_id == 3691875){
+                    $(that).siblings('input').val(num);
+                    total();
+                    return;
+                }
+                if(rs != num) {
+                    $('.loading-html-bak').css('display', 'block');
+                    $.post('/bns2/nfc_buycars', {type_id: type_id, num: num, method: 'update'}, function (r) {
+                        r = JSON.parse(r);
+                        if (r.status == 'ok') {
+                            $(that).siblings('input').val(num);
+                            total();
+                        } else {
+                            alert(r.msg);
+                        }
+                        $('.loading-html-bak').css('display', 'none');
+                    });
+                }
+            });
+        }
+        bind_cart_event();
+    });
+//    $('.warn').click(function () {
+//        alert('请您先购买爱润妍相关产品方可进入个人中心')
+//    });
+    var old_num = 0;
+    //获得焦点将这个值记录下来
+    $('.taocan input').focus(function(){
+        $("#order_add_submit").css("background","#c7c7c7");
+        $("#order_add_submit").attr("isclick","no");
+        old_num = $(this).val();
+    });
+    //输入数量时改变价格
+    $('.taocan input').blur(function () {
+        $("#order_add_submit").css("background","#bf2071");
+        var type_id = $(this).parent().attr('data');
+        if(type_id == 3691875){
+            $("#order_add_submit").attr("isclick","ok");
+            total();
+            return;
+        }
+        if($(this).val() == ''){
+            $(this).val(old_num);
+        }
+        var num = $(this).val();
+        if(old_num != num) {
+            $('.loading-html-bak').css('display', 'block');
+            $.post('/bns2/nfc_buycars', {type_id: type_id, num: num, method: 'update'}, function (r) {
+                r = JSON.parse(r);
+                if (r.status == 'ok') {
+                    total();
+                } else {
+                    alert(r.msg);
+                }
+                setTimeout(function () {
+                    $("#order_add_submit").attr("isclick", "ok");
+                    $('.loading-html-bak').css('display', 'none');
+                }, 200);
+            });
+        }else {
+            $("#order_add_submit").attr("isclick", "ok");
+        }
+        old_num = 0;
+    });
+    //计算总价
+    function total() {
+        var s1 = 0;
+        var s2 = 0;
+        var single_price = $('.single_price');
+        //在这和数据库同步
+
+        $('.car-body li').each(function (i) {
+            if ($(this).find('input').val() == '') {
+                s1 = parseFloat(s1);
+                s2 = parseFloat(s2);
+            }
+            else {
+                if ($(this).children('.choose').hasClass('show-choose')) {
+                    s1 = parseFloat(s1 + parseFloat($(this).find('input').val()) * parseFloat($(this).find('.single_price').text()));
+                    s2= parseFloat(s2 + parseFloat($(this).find('input').val()));
+                }
+            }
+        });
+        $("#total1").html(s1.toFixed(2));
+        $("#total2").html(s2.toFixed(0));
+    }
+    total();
+
+</script>
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script></body></html>
