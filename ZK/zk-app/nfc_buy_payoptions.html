@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -8,178 +10,109 @@
 <meta name="format-detection" content="email=no">
 <title>支付订单</title>
 <link href="./src/css/payoptions.css" rel="stylesheet">
-<!--[if lt IE 9]>
-    <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
-    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-<script src="./src/js/hm.js"></script>
 <script src="./src/js/jquery.min.js"></script>
-<script src="./src/js/base64.js"></script>
-<script>
-        function getAlipayData(){
-            $.post('/bns3/fc/alipay_get',{method:'alipayOrder',orderid:'55559184'},function(r){
-                if(r.status == 'ok') {
-                    var base = new Base64();
-                                        location.href = '/bns3/fc/alipay_get?orderid=55559184';
-                }else{
-                    alert(r.msg);
-                }
-                return false;
-            })
-        }
-    </script>
-<script type="text/javascript">
-        if('' == 'union' && '55559184'){
-            $('#pay-btn').html("正在查询支付结果，切勿关闭当前页面");
-            //防止页面后退
-
-            pushHistory();
-            window.addEventListener('popstate', function () {
-                alert('请耐心等待，支付成功后页面会自动跳转。此时关闭页面可能会造成用户关系未绑定，红包奖励未推送等问题，切勿关闭该页面');
-                pushHistory();
-            });
-            var is_set = 0;
-            CheckPay(is_set);
-        }
-        function pushHistory() {
-            var state = {
-                title: "title",
-                url: "#"
-            };
-            window.history.pushState(state, "title", "#");
-        }
-        function CheckPay(is_set){
-            setTimeout(function(){
-                $.post('/bns/CheckPayInfo',{order_id:'55559184'},function(res){
-                    is_set = res.order_status;
-                    if(is_set != 1){
-                        CheckPay();
-                    }else{
-                        $('#pay-btn').html("支付成功");
-                        location.href = '/bns2/nfc_extension';
-                    }
-                })
-            },1000);
-        }
-        //调用微信JS api 支付
-        function jsApiCall() {
-            WeixinJSBridge.invoke(
-                'getBrandWCPayRequest',
-                JSON.parse(''),
-                function (res){
-                    WeixinJSBridge.log(res.err_msg);
-                    if (res.err_msg == "get_brand_wcpay_request:ok") {
-                        //防止页面后退
-                        pushHistory();
-                        window.addEventListener('popstate', function () {
-                            alert('请耐心等待，支付成功后页面会自动跳转。此时关闭页面可能会造成用户关系未绑定，红包奖励未推送等问题，切勿关闭该页面');
-                            pushHistory();
-                        });
-                        $('#pay-btn').html("订单信息确认中……");
-                        $.post('/bns/checkpay', {out_trade_no: ''}, function (res) {
-                            res = JSON.parse(res);
-                            if (res) {
-                                if (res.trade_state == 'SUCCESS') {
-                                    $('#pay-btn').html("正在查询支付结果，切勿关闭当前页面");
-                                    var jump = '';
-                                    var apply_id = '';
-                                    if ('apply_paysuccess' == jump) {
-//                                        location.href = '/bns/userinfotest?sm=' + apply_id;
-                                    } else {
-                                        if(res.out_trade_no == '151170201358911441'){
-                                            var is_set = 0;
-                                            CheckPay(is_set);
-                                        }
-                                    }
-                                } else {
-                                    $('#pay-btn').html("支付失败，请检查您的账户信息");
-                                }
-                            }
-                        })
-                    } else {
-                        $('#pay-btn').html("重新支付");
-                    }
-                }
-            );
-        }
-        function callpay() {
-
-            if('wx' == pay_way){
-                alert('微信支付维护中，请使用其他支付方式');
-                return false;
-                if (typeof WeixinJSBridge == "undefined") {
-                    if (document.addEventListener) {
-                        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-                    } else if (document.attachEvent) {
-                        document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-                    }
-                } else {
-                    jsApiCall();
-                }
-            }else if('union' == pay_way){
-                $("#union_pay_cart").submit();
-            }else if('alipay' == pay_way){
-                location.href = '/process/order/alipay?orderId=55559184';
-                            }
-        }
-    </script>
 </head>
+
 <body>
-<div class="top">
-<span>订单金额</span>
-<span class="price">29.80(运费0元)</span>
-</div>
-<div class="top">
-<span>收货人：</span><span class="fr">张艳玲</span></div>
-<div style="margin-top: 20px;background-color: #fff">
-<div class="wx clearfix" data="alipay">
-<img src="./src/images/zhifubao.svg" class="paywx">
-<p style="border: none;">支付宝支付</p>
-<img src="./src/images/chooser.svg" class="choose">
-</div>
-<div class="wx clearfix" data="union">
-<img src="./src/images/paybank.svg" class="paywx">
-<p>银联支付</p>
-<img src="./src/images/choosep.svg" class="choose">
-</div>
-</div>
-<form id="union_pay_cart" action="http://c.irunyan.com/bns2/union_pay_for_cart" method="post">
-<input type="hidden" name="order_id" value="55559184">
-<input type="hidden" name="remark" value="">
-</form>
-<div class="bot"><button onclick="callpay()" id="pay-btn">确认支付￥29.80</button></div>
-<p class="tishi">温馨提示</p>
-<p class="b-tips">支付完成后将会生成您的专属二维码，</p>
-<p class="b-tips">请勿关闭当前页面。</p>
+  <div class="top">
+    <span>订单金额</span>
+    <span class="price">29.80(运费0元)</span>
+  </div>
+  <!-- <div style="margin-top: 20px;background-color: #fff">
+    <div class="wx clearfix" data="alipay">
+      <img src="./src/images/zhifubao.svg" class="paywx">
+      <p style="border: none;">支付宝支付</p>
+      <img src="./src/images/chooser.svg" class="choose">
+    </div>
+    <div class="wx clearfix" data="union">
+      <img src="./src/images/paybank.svg" class="paywx">
+      <p>银联支付</p>
+      <img src="./src/images/choosep.svg" class="choose">
+    </div>
+  </div> -->
+  <!-- <form id="union_pay_cart" action="http://c.irunyan.com/bns2/union_pay_for_cart" method="post">
+    <input type="hidden" name="order_id" value="55559184">
+    <input type="hidden" name="remark" value="">
+  </form> -->
+  <div class="bot"><button id="pay-btn">确认支付￥29.80</button></div>
+  <p class="tishi">温馨提示</p>
+  <p class="b-tips">支付完成后将会生成您的专属二维码，</p>
+  <p class="b-tips">请勿关闭当前页面。</p>
 
-<script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
-<script src="./src/js/common.js"></script>
-<script>
-    var pay_way = 'alipay';
-    $(function (){
-        $('.wx').click(function(){
-            pay_way = $(this).attr('data');
-            $(this).find('.choose').attr('src','./src/images/chooser.svg').parent().siblings().find('.choose').attr('src','./src/images/choosep.svg')
-        });
-    });
-</script>
-<script>
-    var payprice = 29.8;
-    var cons = 0;
-    if(cons != 0){
-        payprice += cons;
+  <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
+  <script src="./src/js/common.js"></script>
+  <script src="./src/js/base64.js"></script>
+  <script>
+  $(function(){
+    var POSITION = null;
+    var token = localStorage.getItem('token');
+    var orders = JSON.parse(decodeURIComponent(pageInfo.orders));
+    if (localStorage.getItem('position')) {
+      POSITION = JSON.parse(localStorage.getItem('position'));
+      initData();
+      bindEvent();
+    } else {
+      mapPosition();
+      POSITION = JSON.parse(localStorage.getItem('position'));
+      initData();
+      bindEvent();
     }
-    $('.price').html(payprice.toFixed(2)+'(运费'+cons+'元)');
-    $('#pay-btn').html('确认支付￥'+payprice.toFixed(2));
-</script>
 
-<script>
+    function initData(){
+      var total = 0;
+      var last_index = orders.payments.length - 1;
+      $.each(orders.payments, function(i, item){
+        var amount = parseFloat(item.amount);
+        if (i === last_index) {
+          total += amount;
+        } else {
+          total += parseFloat((amount / 100).toFixed(2));
+        }
+      });
+      total = total.toFixed(2);
+      $('.price').text(total + '(运费'+ orders.payments[last_index].amount +'元)');
+      $('#pay-btn').text('确认支付￥' + total);
+    }
+    function bindEvent(){
+      $('#pay-btn').on('click', function(){
+        $.api.post(serverUrlBase+'/customer/' + token + '/order/pay', contactObj({
+          orders: orders.ids,
+          payments: orders.payments
+        }, POSITION), function(res){
+          if (res.success) {
+            alert('支付成功');
+            // window.location.href = 'nfc_login.html';
+          } else {
+            alert(res.resultMsg);
+          }
+        });
+      });
+    }
+    function getAlipayData() {
+      $.post('/bns3/fc/alipay_get', {
+        method: 'alipayOrder',
+        orderid: '55559184'
+      }, function(r) {
+        if(r.status == 'ok') {
+          var base = new Base64();
+          location.href = '/bns3/fc/alipay_get?orderid=55559184';
+        } else {
+          alert(r.msg);
+        }
+        return false;
+      })
+    }
+  });
+  </script>
+  <script>
     var _hmt = _hmt || [];
     (function() {
-        var hm = document.createElement("script");
-        hm.src = "http://hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
+      var hm = document.createElement("script");
+      hm.src = "http://hm.baidu.com/hm.js?311b42ba1e27791d2d125b30a41a0d89";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
     })();
-</script></body></html>
+  </script>
+</body>
+
+</html>
