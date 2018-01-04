@@ -139,8 +139,8 @@
       var ajax = {
         getDefaultAddr: function() {
           $.api.get(serverUrlBase + '/customer/' + token + '/address/default', {
-            lat: POSITION.lat,
-            lng: POSITION.lng
+//            lat: POSITION.lat,
+//            lng: POSITION.lng
           }, function(res) {
             if(res.success) {
               if (res.data.object) {
@@ -170,8 +170,8 @@
         },
         getProvince: function() {
           $.api.get(serverUrlBase + '/base/province', {
-            lat: POSITION.lat,
-            lng: POSITION.lng
+//            lat: POSITION.lat,
+//            lng: POSITION.lng
           }, function(res) {
             if(res.success) {
               init.provinceShow(res.data.list);
@@ -187,8 +187,8 @@
         },
         getCity: function(id){
           $.api.get(serverUrlBase + '/base/city', {
-            lat: POSITION.lat,
-            lng: POSITION.lng,
+//            lat: POSITION.lat,
+//            lng: POSITION.lng,
             provinceId: id
           }, function(res) {
             if(res.success) {
@@ -205,8 +205,8 @@
         },
         getDistrict: function(id) {
           $.api.get(serverUrlBase + '/base/district', {
-            lat: POSITION.lat,
-            lng: POSITION.lng,
+//            lat: POSITION.lat,
+//            lng: POSITION.lng,
             cityId: id
           }, function(res) {
             if(res.success) {
@@ -218,8 +218,8 @@
         },
         addAddress: function(param) {
           $.api.post(serverUrlBase + '/customer/' + token + '/address/add', contactObj(param, {
-            lat: POSITION.lat,
-            lng: POSITION.lng,
+//            lat: POSITION.lat,
+//            lng: POSITION.lng,
           }), function(res) {
             if(res.success) {
               $('.takeinfo').hide();
@@ -234,19 +234,20 @@
         },
         deleteAddress: function(id) {
           $.api.post(serverUrlBase + '/customer/' + token + '/address/del', {
-            lat: POSITION.lat,
-            lng: POSITION.lng,
+//            lat: POSITION.lat,
+//            lng: POSITION.lng,
             id: id
           }, function(res) {
           });
         },
         orderSubmit: function(data) {
           $.api.post(serverUrlBase + '/customer/' + token + '/order/add', contactObj(data,{
-            lat: POSITION.lat,
-            lng: POSITION.lng
+//            lat: POSITION.lat,
+//            lng: POSITION.lng
           }), function(res) {
             if(res.success) {
               var data = res.data;
+              
               window.location.href = 'nfc_buy_payoptions.html?orders=' + encodeURIComponent(JSON.stringify(data));
             } else {
               alert(res.resultMsg);
@@ -437,18 +438,22 @@
         }
       }
 
-      if (localStorage.getItem('position')) {
-        POSITION = JSON.parse(localStorage.getItem('position'));
-        ajax.getDefaultAddr();
-        init.productList();
-        init.bindEvent();
-      } else {
-        mapPosition();
-        POSITION = JSON.parse(localStorage.getItem('position'));
-        ajax.getDefaultAddr();
-        init.productList();
-        init.bindEvent();
-      }
+//      if (localStorage.getItem('position')) {
+//        POSITION = JSON.parse(localStorage.getItem('position'));
+//        ajax.getDefaultAddr();
+//        init.productList();
+//        init.bindEvent();
+//      } else {
+//        mapPosition();
+//        POSITION = JSON.parse(localStorage.getItem('position'));
+//        ajax.getDefaultAddr();
+//        init.productList();
+//        init.bindEvent();
+//      }
+
+      ajax.getDefaultAddr();
+      init.productList();
+      init.bindEvent();
 
       $('.loading-html').css('opacity', 0);
       setTimeout(function() {

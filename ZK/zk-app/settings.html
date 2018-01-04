@@ -60,7 +60,7 @@
     </a>
   </div> -->
   <div class="list">
-    <a href="javascript:loginOut()">
+    <a class="loginOut" href="javascript:void()">
       <svg class="icon" style="height: 54%;" aria-hidden="true">
         <use xlink:href="#icon-phone"></use>
       </svg>
@@ -96,13 +96,23 @@
         }
       }
 
+      function bindEvent () {
+        $('.loginOut').click(function(){
+          localStorage.removeItem('token');
+          localStorage.removeItem('params.username');
+          location.href = 'nfc_login.html';
+        });
+      }
+
       if (localStorage.getItem('position')) {
         POSITION = JSON.parse(localStorage.getItem('position'));
         ajax.getInfo();
+        bindEvent();
       } else {
         mapPosition();
         POSITION = JSON.parse(localStorage.getItem('position'));
         ajax.getInfo();
+        bindEvent();
       }
 
       $('.loading-html').css('opacity', 0);

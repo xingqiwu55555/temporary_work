@@ -13,6 +13,8 @@
 <title>娅慧</title>
 <link href="./src/css/newfront.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="./src/css/swiper.min.css">
+<link rel="stylesheet" href="./src/lib/layer/layer.css">
+
 <!--[if lt IE 9]>
     <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -116,6 +118,7 @@
   <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=2423f0399906505f5ff497e6ffc60d53"></script>
   <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
   <script src="./src/js/common.js"></script>
+  <script src="./src/lib/layer/mobile/layer.js"></script>
   <script src="./src/js/swiper.min.js"></script>
   <script src="./src/js/lazysizes.min.js"></script>
   <script src="./src/js/jquery.fly.min.js"></script>
@@ -123,21 +126,20 @@
     $(function() {
       var POSITION = null;
       var token = window.localStorage.token;
-      if (localStorage.getItem('position')) {
-        POSITION = JSON.parse(localStorage.getItem('position'));
-        ajaxApi(); 
-      } else {
-        mapPosition();
-        POSITION = JSON.parse(localStorage.getItem('position'));
-        ajaxApi(); 
-      }
-      
+//      if (localStorage.getItem('position')) {
+//        POSITION = JSON.parse(localStorage.getItem('position'));
+//      } else {
+//        mapPosition();
+//        POSITION = JSON.parse(localStorage.getItem('position'));
+//      }
+      ajaxApi();
+
       //解析定位结果
       function ajaxApi() {
       	// 首页轮播
       	$.api.get(serverUrlBase + '/base/banner/1', {
-          lat: POSITION.lat,
-          lng: POSITION.lng
+//          lat: POSITION.lat,
+//          lng: POSITION.lng
         }, function(res) {
           if(res.success) {
             initSwiper(res.data.list);
@@ -148,8 +150,8 @@
         
         // 获取商城商品第一页
         $.api.get(serverUrlBase + '/product/pager', {
-          lat: POSITION.lat,
-          lng: POSITION.lng,
+//          lat: POSITION.lat,
+//          lng: POSITION.lng,
           type: 1,
           page: 1
         }, function(res) {
@@ -162,8 +164,8 @@
 
         // 获取指定位置推荐商品
         $.api.get(serverUrlBase + '/activity/rec/product/1', {
-          lat: POSITION.lat,
-          lng: POSITION.lng
+//          lat: POSITION.lat,
+//          lng: POSITION.lng
         }, function(res) {
           if(res.success) {
             initDataP(res.data.list, $('.list-bottom'));
@@ -284,8 +286,8 @@
         var type_id = $(this).attr('data');
 
         $.api.post(serverUrlBase + '/customer/'+ token +'/cart/add', {
-          lat: POSITION.lat,
-          lng: POSITION.lng,
+//          lat: POSITION.lat,
+//          lng: POSITION.lng,
           productId: type_id
         }, function(res) {
           if(res.success) {

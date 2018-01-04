@@ -17,11 +17,11 @@
 
 <body>
   <ul class="tab-bar clearfix">
-    <li class="active">全部</li>
-    <li>未支付</li>
-    <li>已支付</li>
-    <li>已发货</li>
-    <li>已完成</li>
+    <li class="active" data-status="-1">全部</li>
+    <li data-status="1">未支付</li>
+    <li data-status="2">已支付</li>
+    <li data-status="4">已发货</li>
+    <li data-status="6">已完成</li>
   </ul>
   <ul class="con">
     <!-- <li class="order-body clearfix">
@@ -143,13 +143,14 @@
     (function(){
       var token = localStorage.getItem('token');
       var POSITION = null;
-      var param = {page: 1, type: -1, status: -1};
+      var param = {page: 1, type: 1, status: -1};
       var totalPages = 0;
       var ajax = {
         getList: function(){
           $.api.get(serverUrlBase + '/customer/' + token + '/order/pager', param, function(res) {
             if(res.success) {
               totalPages = res.data.totalPages;
+              console.log(res.data.pager.list)
               init.lists(res.data.pager.list);
             } else {
               alert(res.resultMsg);
@@ -161,30 +162,30 @@
       var init = {
         lists: function(data) {
           var arr = [];
-          $.each(data, function(item, i){
+          $.each(data, function(i, item){
             var imgStr = '';
-            var imgs = [], img_len = item.subs.length;
-            if (img_len < 2) {
+            var imgs = [], img_len = item.subs ? item.subs.length : 0;
+            if (img_len < 2 && img_len > 0) {
               imgStr = '<img src="'+ getResUrlFromPath(item.subs[0].productMainimage) +'" class="goods">'+
                         '<div class="fl">'+
                           '<p class="title">'+ item.subs[0].productName +'</p>'+
                           '<p class="tips"></p>'+
                         '</div>';
             } else {
-              $.each(item.subs, function(img, j){
+              $.each(item.subs, function(j, img){
                 imgs.push('<img src="'+ getResUrlFromPath(img.productMainimage) +'" class="goods">')
               });
               imgStr = imgs.join('');
             }
             arr.push('<li class="order-body clearfix">'+
-              '<a class="link_order" href="nfc_user_orderdetail.html?orderid='+item.orderId +'">'+
+              '<a class="link_order" href="nfc_user_orderdetail.html?orderid='+item.id +'">'+
               '<div class="clearfix good_wrap">'+ imgStr +
               
               '<img src="./src/images/grayjiantou.svg" class="jiantou">'+
               '</div>'+
               '</a>'+
               '<p class="time">'+ item.dateAdded +'</p>'+
-              '<p class="price">'+ item.total +'</p>'+
+              '<p class="price">'+ Utils.format.money(item.total, false) +'</p>'+
               '</li>');
           });
           $('.con').append(arr.join(''));
@@ -192,7 +193,22 @@
         bindEvent: function() {
           $('.tab-bar').on('click','li',function(){
             $(this).addClass('active').siblings().removeClass('active');
-          })
+            var status = $(this).data('status');
+            param = {page: 1, type: 1, status: status};
+            $('.con').html('');
+            ajax.getList();
+          });
+
+          $(window).scroll(function() {
+            if(param.page >= totalPages) {
+              return;
+            }
+            var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+            if(totalheight >= ($(document).height())) {
+              param.page++;
+              ajax.getList();
+            }
+          });
         }
       }
 

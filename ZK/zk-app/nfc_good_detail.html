@@ -44,7 +44,7 @@
       数量:<span>93557</span>
     </div>
     <div class="content-box"></div> -->
-    <ul class="goods_bottom clearfix">
+    <ul class="goods_bottom clearfix" >
       <li class="clearfix small-li">
         <div class="price clearfix">
           <!-- <div class="price-top"><s>原价￥</s></div>
@@ -54,10 +54,10 @@
       <li class="big-li"> <button class="add-to-cart" type="content">加入购物车</button></li>
       <li class="small-li clearfix">
         <a href="nfc_buycars.html">
-          <img src="./src/images/carg.svg" class="car">
+          <img src="./src/images/carg.svg" class="car" />
           <div class="num">0</div>
           <div class="nam">购物车</div>
-        </a>&gt;
+        </a>
       </li>
     </ul>
     <img src="" class="hide hide-img">
@@ -81,8 +81,8 @@
       var ajax = {
         getDetail: function(){
           $.api.get(serverUrlBase + '/product/'+ good_id +'?token=' + token, {
-            lat: POSITION.lat,
-            lng: POSITION.lng
+//            lat: POSITION.lat,
+//            lng: POSITION.lng
           }, function(res) {
             if(res.success) {
               initSwiper(res.data.object.imgs);
@@ -94,8 +94,8 @@
         },
         initCar: function(){
           $.api.get(serverUrlBase + '/customer/'+ token +'/cart/pager?page=1', {
-            lat: POSITION.lat,
-            lng: POSITION.lng
+//            lat: POSITION.lat,
+//            lng: POSITION.lng
           }, function(res) {
             if(res.success) {
               $('.num').html(res.data.pager.totalItems);
@@ -114,8 +114,8 @@
           var img = $('.hide').attr('src'); //获取当前点击图片链接
           var flyer = $('<img class="flyer-img" src="' + img + '">'); //抛物体对象
           $.api.post(serverUrlBase + '/customer/'+ token +'/cart/add', {
-            lat: POSITION.lat,
-            lng: POSITION.lng,
+//            lat: POSITION.lat,
+//            lng: POSITION.lng,
             productId: good_id
           }, function(res) {
             if(res.success) {
@@ -145,16 +145,8 @@
         }
       }
 
-      if (localStorage.getItem('position')) {
-        POSITION = JSON.parse(localStorage.getItem('position'));
-        ajax.getDetail(); 
-        ajax.initCar();
-      } else {
-        mapPosition();
-        POSITION = JSON.parse(localStorage.getItem('position'));
-        ajax.getDetail(); 
-        ajax.initCar();
-      }
+      ajax.getDetail();
+      ajax.initCar();
 
       // 初始化轮播图
       function initSwiper(data){
@@ -191,7 +183,8 @@
                   '<div class="content-box"> <p class="content-title">商品详情</p>'+ data.content +'</div>';
         $('.goods_bottom').before(str);
         $('.hide-img').attr('src', getResUrlFromPath(data.mainImage));
-        $('.price').html('<div class="price-top"><s>原价￥'+ Utils.format.money(data.oriPrice) +'</s></div><div class="price-bot">￥'+ Utils.format.money(data.price) +'</div>');
+        $('.price').html('<div class="price-top"></div><div class="price-bot">￥'+ Utils.format.money(data.price) +'</div>');
+//        $('.price').html('<div class="price-top"><s>原价￥'+ Utils.format.money(data.oriPrice) +'</s></div><div class="price-bot">￥'+ Utils.format.money(data.price) +'</div>');
       }
 
       $(".add-to-cart").click(function(event) {

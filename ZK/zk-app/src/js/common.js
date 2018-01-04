@@ -2,13 +2,13 @@
 // ************** 全局函数 开始****************************
 // 服务器登录接口
 
-// var serverUrlBase = 'http://localhost:9999/client';
-window.serverUrlBase = 'http://c2.samuelzuuka.com:9998/client';
+// var serverUrlBase = 'http://localhost:9999/client';http://c2.samuelzuuka.com:9998/client
+window.serverUrlBase = 'http://c2.samuelzuuka.com/csmapi/client';
 
 // var frontUrlBase = 'http://c2.samuelzuuka.com/v6/jhshop-front/index2';
 var frontUrlBase = 'http://localhost:88/index2';
 var resUrlBase = 'http://c2.samuelzuuka.com:7000/';
-var payServerUrlBase = 'http://c2.samuelzuuka.com/v6/3rd-server/';
+var payServerUrlBase = 'http://c2.samuelzuuka.com/v6/3rd-server';
 var masterUrlBase = '#';
 
 function getResUrlFromPath(path){
@@ -232,7 +232,7 @@ function contactObj(obj, param){
 }
 
 function mapPosition() {
-    var map, geolocation;
+    /*var map, geolocation;
     //加载地图，调用浏览器定位服务
     map = new AMap.Map('container', {
       resizeEnable: true
@@ -256,7 +256,7 @@ function mapPosition() {
         }));
       }); //返回定位信息
       AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
-    });
+    });*/
 }
 window.Utils = {
     getUrlParams: function () {

@@ -128,8 +128,8 @@
       var ajax = {
         getList: function() {
           $.api.get(serverUrlBase + '/customer/' + token + '/cart/pager?page=' + page, {
-            lat: POSITION.lat,
-            lng: POSITION.lng
+//            lat: POSITION.lat,
+//            lng: POSITION.lng
           }, function(res) {
             if(res.success) {
               total_page = res.data.pager.totalPages;
@@ -156,8 +156,8 @@
         },
         deleteList: function(id) {
           $.api.post(serverUrlBase + '/customer/' + token + '/cart/delete', {
-            lat: POSITION.lat,
-            lng: POSITION.lng,
+//            lat: POSITION.lat,
+//            lng: POSITION.lng,
             productId: id
           }, function(res) {
             if(res.success) {
@@ -182,8 +182,8 @@
         },
         updateNumber: function(type, num, id, elem) {
           $.api.post(serverUrlBase + '/customer/' + token + '/cart/update', {
-            lat: POSITION.lat,
-            lng: POSITION.lng,
+//            lat: POSITION.lat,
+//            lng: POSITION.lng,
             quantity: num,
             productId: id
           }, function(res) {
@@ -425,14 +425,14 @@
         }
       }
       
-      if (localStorage.getItem('position')) {
-        POSITION = JSON.parse(localStorage.getItem('position'));
-        init.html();
-      } else {
-        mapPosition();
-        POSITION = JSON.parse(localStorage.getItem('position'));
-        init.html();
-      }
+//      if (localStorage.getItem('position')) {
+//        POSITION = JSON.parse(localStorage.getItem('position'));
+//        init.html();
+//      } else {
+//        mapPosition();
+//        POSITION = JSON.parse(localStorage.getItem('position'));
+//      }
+      init.html();
     })();
   </script>
   <script>

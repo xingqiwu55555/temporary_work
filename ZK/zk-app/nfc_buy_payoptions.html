@@ -10,13 +10,14 @@
 <meta name="format-detection" content="email=no">
 <title>支付订单</title>
 <link href="./src/css/payoptions.css" rel="stylesheet">
+<link rel="stylesheet" href="./src/lib/layer/layer.css">
 <script src="./src/js/jquery.min.js"></script>
 </head>
 
 <body>
   <div class="top">
     <span>订单金额</span>
-    <span class="price">29.80(运费0元)</span>
+    <span class="price">0.00</span>
   </div>
   <!-- <div style="margin-top: 20px;background-color: #fff">
     <div class="wx clearfix" data="alipay">
@@ -34,7 +35,7 @@
     <input type="hidden" name="order_id" value="55559184">
     <input type="hidden" name="remark" value="">
   </form> -->
-  <div class="bot"><button id="pay-btn">确认支付￥29.80</button></div>
+  <div class="bot"><button id="pay-btn">确认支付￥0.00</button></div>
   <p class="tishi">温馨提示</p>
   <p class="b-tips">支付完成后将会生成您的专属二维码，</p>
   <p class="b-tips">请勿关闭当前页面。</p>
@@ -42,11 +43,13 @@
   <script src="https://cdn.bootcss.com/axios/0.16.2/axios.min.js "></script>
   <script src="./src/js/common.js"></script>
   <script src="./src/js/base64.js"></script>
+  <script src="./src/lib/layer/mobile/layer.js"></script>
   <script>
   $(function(){
     var POSITION = null;
     var token = localStorage.getItem('token');
     var orders = JSON.parse(decodeURIComponent(pageInfo.orders));
+    console.log(orders);
     if (localStorage.getItem('position')) {
       POSITION = JSON.parse(localStorage.getItem('position'));
       initData();
@@ -60,32 +63,34 @@
 
     function initData(){
       var total = 0;
-      var last_index = orders.payments.length - 1;
       $.each(orders.payments, function(i, item){
         var amount = parseFloat(item.amount);
-        if (i === last_index) {
-          total += amount;
-        } else {
-          total += parseFloat((amount / 100).toFixed(2));
-        }
+        total += parseFloat((amount / 100).toFixed(2));
+        item.id = parseInt(item.id);
       });
       total = total.toFixed(2);
-      $('.price').text(total + '(运费'+ orders.payments[last_index].amount +'元)');
+      $('.price').text(total +'元)');
       $('#pay-btn').text('确认支付￥' + total);
     }
     function bindEvent(){
       $('#pay-btn').on('click', function(){
-        $.api.post(serverUrlBase+'/customer/' + token + '/order/pay', contactObj({
-          orders: orders.ids,
-          payments: orders.payments
-        }, POSITION), function(res){
-          if (res.success) {
-            alert('支付成功');
-            // window.location.href = 'nfc_login.html';
-          } else {
-            alert(res.resultMsg);
-          }
-        });
+        layerConfirm('确认立即支付？', function(){
+          $.api.post(serverUrlBase+'/customer/' + token + '/order/pay', contactObj({
+            orders: orders.ids,
+            payments: orders.payments
+          }, POSITION), function(res){
+            if (res.success) {
+              alert('支付成功');
+              window.location.href = 'nfc_user_order.html';
+            } else {
+              alert(res.resultMsg);
+              window.location.href = 'nfc_user_order.html';
+            }
+          });
+        }, function(){
+          window.location.href = 'nfc_user_order.html';
+        })
+        
       });
     }
     function getAlipayData() {
