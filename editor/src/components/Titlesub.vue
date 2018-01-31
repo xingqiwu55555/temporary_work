@@ -1,7 +1,7 @@
 <template>
   <div class="titlesub">
     <div><span class="line-lf"></span>{{title}}<span class="line-rt"></span></div>
-    <p>{{subtitle}}</p>
+    <p v-html="subtitle"></p>
   </div>
 </template>
 
