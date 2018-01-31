@@ -1,0 +1,11 @@
+@import  "./_baseFunction";
+
+.league{
+  .league-swiper{
+    width: 100%;
+    height: 529px;
+    .swiper-slide{
+      height: 100px;
+    }
+  }
+}

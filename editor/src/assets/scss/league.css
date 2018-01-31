@@ -1,0 +1,8 @@
+.league .league-swiper {
+  width: 100%;
+  height: 529px;
+}
+
+.league .league-swiper .swiper-slide {
+  height: 100px;
+}
