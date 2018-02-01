@@ -1,6 +1,13 @@
 <template>
   <div class="header">
-    <div class="header-content">
+    <div class="header-mobile">
+      <!-- <h2 class="logo">
+        <router-link :to="{ name: 'league'}" exact tag="a">
+          <img src="../assets/images/logo.png" alt="">
+        </router-link>
+      </h2> -->
+    </div>
+    <div class="header-pc">
       <h2 class="logo">
         <router-link :to="{ name: 'league'}" exact tag="a">
           <img src="../assets/images/logo.png" alt="">

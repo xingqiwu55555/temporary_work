@@ -53,6 +53,17 @@
       padding: 2px 10px;
       border-left: 1px solid #dfdfdf;
     }
+    &.form-message{
+      input{
+        width: 60%;
+      }
+      span{
+        display: inline-block;
+        text-align: center;
+        color: $blueColor;
+        cursor: pointer;
+      }
+    }
   }
   .forget-pwd{
     text-align: right;
@@ -71,6 +82,9 @@
     margin-top: 80px;
     &:hover{
       background: $dblueColor;
+    }
+    &.form-btn-top{
+      margin-top: 40px;
     }
   }
   .form-notice{

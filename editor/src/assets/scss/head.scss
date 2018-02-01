@@ -4,6 +4,11 @@
   width: 1200px;
   margin: 0 auto;
   padding: 10px 0;
+}
+.header-mobile{
+  display: none;
+}
+.header-pc{
   &:after{
     content: '';
     display: block;
@@ -84,5 +89,18 @@
         color: $dblueColor;
       }
     }
+  }
+}
+
+
+@media (max-width:1199px){
+  .header{
+    width: 100%;
+  }
+  .header-pc{
+    display: none;
+  }
+  .header-mobile{
+    display: block;
   }
 }

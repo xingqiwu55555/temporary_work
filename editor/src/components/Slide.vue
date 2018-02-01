@@ -49,4 +49,9 @@
     border-top: none;
   }
 }
+@media (max-width:1199px){
+  .slider{
+    display: none;
+  }
+}
 </style>

@@ -5,7 +5,7 @@
       <div class="form-first clear">
         <p class="form-title lf">登录</p>
         <p class="form-skip rt">
-          <router-link :to="{ name: 'login'}" exact class="active" tag="a">注册</router-link>
+          <router-link :to="{ name: 'register'}" exact class="active" tag="a">注册</router-link>
         </p>
       </div>
       <div class="form clear">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <p class="forget-pwd">
-        <router-link :to="{ name: 'foget'}" exact class="active" tag="a">忘记密码</router-link>
+        <router-link :to="{ name: 'forget'}" exact class="active" tag="a">忘记密码</router-link>
       </p>
 
       <button class="form-btn">登录</button>

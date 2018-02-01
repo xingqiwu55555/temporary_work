@@ -2,7 +2,7 @@
   <div class="investment">
     <Head />
     <SwiperMain :imgUrl="investBanner"/>
-    <div class="member-box">
+    <div class="college-box">
       <p class="title">东亚商学院，扶持创业，帮忙落地</p>
       <img src="../assets/images/investment/college.png" alt="">
       <ul class="text-box clear">

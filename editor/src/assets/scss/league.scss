@@ -1,8 +1,5 @@
 @import  "./_baseFunction";
 
-.league{
-  
-}
 .support-swiper{
   width: 1200px;
   margin: 0 auto;
@@ -91,7 +88,7 @@
       float: left;
       text-align: center;
       background-size: 100% 100%;
-      background-image: url(../assets/images/league/industry-more.png);
+      background-image: url('../assets/images/league/industry-more.jpg');
       &:hover{
         .box-wrap{
           opacity: 0;
@@ -158,5 +155,17 @@
     img{
       height: 300px;
     }
+  }
+}
+@media (max-width:1199px){
+  .support-swiper{
+    width: 100%;
+  }
+  .threeimg{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .map-box{
+    display: none;
   }
 }
