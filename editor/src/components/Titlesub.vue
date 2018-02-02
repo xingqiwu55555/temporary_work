@@ -44,4 +44,25 @@
     margin-top: 30px;
   }
 }
+@media (max-width:1199px){
+  .titlesub{
+    margin: 30px auto;
+    div{
+      font-size: 18px;
+    }
+    span{
+      width: 40px;
+      height: 1px;
+    }
+    .line-lf{
+      margin-right: 20px;
+    }
+    .line-rt{
+      margin-left: 20px;
+    }
+    p{
+      margin-top: 8px;
+    }
+  }
+}
 </style>

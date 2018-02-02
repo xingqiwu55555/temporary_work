@@ -57,5 +57,11 @@ export default {
   .swiper-pagination-bullet-active{
     background: #52a2f4;
   }
+  .swiper-button-next, .swiper-button-prev{
+    width: 15px;
+    height: 24px;
+    margin-top: -12px;
+    background-size: 15px 24px;
+  }
 }
 </style>

@@ -104,8 +104,8 @@ $inputHeight: 44px;
   }
   .form-label{
     float: left;
-    line-height: 44px;
-    height: 44px;
+    line-height: $inputHeight;
+    height: $inputHeight;
     width: 100px;
   }
   .form-input{
@@ -117,7 +117,7 @@ $inputHeight: 44px;
       display: inline-block;
       width: 200px;
       text-align: center;
-      line-height: 44px;
+      line-height: $inputHeight;
       position: relative;
       &:before{
         content: "";
@@ -194,8 +194,8 @@ $inputHeight: 44px;
       width: 200px;
       text-align: center;
       box-sizing: border-box;
-      line-height: 44px;
-      height: 44px;
+      line-height: $inputHeight;
+      height: $inputHeight;
       position: relative;
       vertical-align: middle;
     }
@@ -222,6 +222,36 @@ $inputHeight: 44px;
     ul{
       position: absolute;
       width: 100%;
+    }
+  }
+}
+@media (max-width:1199px){
+$inputWidth: 75%;
+$inputHeight: 36px;
+  .agentform{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 10px;
+    .form-label{
+      width: 25%;
+    }
+    .form-input{
+      width: $inputWidth;
+    }
+    .form-radio{
+      font-size: 0;
+      label{
+        display: inline-block;
+        width: 50%;
+        text-align: center;
+        line-height: $inputHeight;
+        position: relative;
+        font-size: 14px;
+        &:before{
+          left: 0px;
+          border: 3px solid $blueColor;
+        }
+      }
     }
   }
 }

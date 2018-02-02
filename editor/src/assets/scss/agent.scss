@@ -10,9 +10,28 @@
     margin-left: 200px;
     color: $blueColor;
     display: inline-block;
+    vertical-align: middle;
   }
   p{
     line-height: 80px;
   }
   .margin-none{ margin-left: 0; }
+}
+@media (max-width:1199px){
+  .table-box{
+    width: 100%;
+    li{
+      width: 23%;
+      margin-left: 2.66%;
+      font-size: 14px;
+    }
+    p{
+      line-height: 40px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    img{
+      width: 80%;
+    }
+  }
 }

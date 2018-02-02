@@ -56,13 +56,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    img{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -44px;
-      margin-top: -44px;
-    }
+    display: -webkit-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    display: box;
+    box-align: center;
+    box-pack: center;
+    img{ display: block; }
   }
 }
 .industry-box{
@@ -160,12 +160,82 @@
 @media (max-width:1199px){
   .support-swiper{
     width: 100%;
+    .swiper-button-next, .swiper-button-prev{
+      width: 15px;
+      height: 24px;
+      margin-top: -12px;
+      background-size: 15px 24px;
+    }
+    .swiper-container{
+      height: 160px;
+      padding-bottom: 30px;
+    }
+    .swiper-slide{
+      &.swiper-slide-active{
+        .slide-img{
+          height: 120px;
+          line-height: 120px;
+        }
+        img{
+          width: 80%;
+        }
+        .slide-text{
+          opacity: 1;
+          height: 30px;
+          padding: 5px 0;
+          line-height: 1.1;
+        }
+      }
+    }
+    .slide-img{
+      height: 160px;
+      line-height: 160px;
+      img{
+        vertical-align: middle;
+        width: 50%;
+      }
+    }
   }
   .threeimg{
-    width: 100%;
+    width: 90%;
     margin-bottom: 20px;
   }
   .map-box{
     display: none;
+  }
+  .vedio-box{
+    .vedio-wrap{
+      img{
+        width: 10%;
+      }
+    }
+  }
+  .industry-box{
+    padding: 40px 0 40px;
+    .title{
+      font-size: 18px;
+    }
+    .box{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 5px;
+      margin-top: 40px;
+      li{
+        width: 19%;
+        height: 120px;
+        margin-bottom: 20px;
+      }
+      .margin-left{
+        margin-left: 1%;
+      }
+      .box-wrap{
+        padding-top: 30px;
+        color: #fff;
+        line-height: 30px;
+        img{
+          height: 40px;
+        }
+      }
+    }
   }
 }

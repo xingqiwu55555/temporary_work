@@ -32,13 +32,13 @@
             <p>生活服务</p>
           </div>
         </li>
-        <li class="industry-company margin-left">
+        <li class="industry-company margin-left margin-left-mobile">
           <div class="box-wrap">
             <img src="../assets/images/league/industry2.png" alt="">
             <p>企业官网</p>
           </div>
         </li>
-        <li class="industry-news margin-left">
+        <li class="industry-news margin-left margin-left-mobile">
           <div class="box-wrap">
             <img src="../assets/images/league/industry3.png" alt="">
             <p>行业资讯</p>
@@ -50,7 +50,7 @@
             <p>商场</p>
           </div>
         </li>
-        <li class="industry-more margin-left">
+        <li class="industry-more margin-left margin-left-mobile">
           <div class="box-wrap">
             <img src="../assets/images/league/industry5.png" alt="">
             <p>更多</p>
