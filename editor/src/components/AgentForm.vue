@@ -90,6 +90,8 @@
 
 $inputWidth: 430px;
 $inputHeight: 44px;
+$inputMobileWidth: 75%;
+$inputMobileHeight: 36px;
 .agentform{
   width: 580px;
   margin: 0 auto 40px;
@@ -146,8 +148,8 @@ $inputHeight: 44px;
   }
   .form-text{
     input{
-      width: $inputWidth;
-      height: $inputHeight;
+      width: $inputMobileWidth;
+      height: $inputMobileHeight;
       box-sizing: border-box;
       border-radius: 8px;
       border: 2px solid #c9c9c9;
@@ -226,8 +228,6 @@ $inputHeight: 44px;
   }
 }
 @media (max-width:1199px){
-$inputWidth: 75%;
-$inputHeight: 36px;
   .agentform{
     width: 100%;
     box-sizing: border-box;
@@ -236,21 +236,73 @@ $inputHeight: 36px;
       width: 25%;
     }
     .form-input{
-      width: $inputWidth;
+      width: $inputMobileWidth;
     }
     .form-radio{
       font-size: 0;
       label{
         display: inline-block;
         width: 50%;
-        text-align: center;
         line-height: $inputHeight;
-        position: relative;
         font-size: 14px;
         &:before{
           left: 0px;
           border: 3px solid $blueColor;
         }
+      }
+    }
+    .form-text{
+      input{
+        width: 100%;
+        height: $inputMobileHeight;
+        border-width: 1px;
+        padding: 2px 10px;
+      }
+    }
+    .form-textarea{
+      textarea{
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 8px;
+        border-width: 1px;
+        padding: 2px 10px;
+        min-height: 160px;
+      }
+    }
+    .form-btn{
+      button{
+        height: 40px;
+        border-radius: 8px;
+        width: 100%;
+        font-size: 16px;
+      }
+    }
+    .form-select{
+      label{
+        width: 50%;
+        line-height: $inputMobileHeight;
+        height: $inputMobileHeight;
+        position: relative;
+        vertical-align: middle;
+      }
+      .addr-prevince{
+        border-radius: 8px;
+        background: $blueColor;
+        z-index: 10;
+        width: 50%;
+        p{
+          color: #fff;
+        }
+      }
+      .addr-city{
+        width: 50%;
+        border: 1px solid #c9c9c9;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        margin-left: -12px;
+      }
+      ul{
+        width: 100%;
       }
     }
   }

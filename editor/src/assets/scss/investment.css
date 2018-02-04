@@ -9,33 +9,33 @@
   font-weight: bold;
 }
 
-.member-box {
+.college-box {
   text-align: center;
   background: #eff9fe;
   padding: 50px 0;
 }
 
-.member-box .title {
+.college-box .title {
   margin-bottom: 40px;
 }
 
-.member-box .text-box {
+.college-box .text-box {
   width: 1200px;
   margin: 10px auto 0;
 }
 
-.member-box .text-box li {
+.college-box .text-box li {
   width: 50%;
   float: left;
   text-align: center;
 }
 
-.member-box .text-box h5 {
+.college-box .text-box h5 {
   font-size: 30px;
   color: #c93838;
 }
 
-.member-box .text-box p {
+.college-box .text-box p {
   font-size: 32px;
 }
 
@@ -190,15 +190,15 @@
   top: 50%;
 }
 
-.pk-box .pk-content p:nth-child(1):after {
+.pk-box .pk-content p.text-one:after {
   content: "1";
 }
 
-.pk-box .pk-content p:nth-child(2):after {
+.pk-box .pk-content p.text-two:after {
   content: "2";
 }
 
-.pk-box .pk-content p:nth-child(3):after {
+.pk-box .pk-content p.text-three:after {
   content: "3";
 }
 
@@ -243,4 +243,109 @@
 .pk-box .pk-rt p:after {
   background: #bfbfbf;
   left: -30px;
+}
+
+@media (max-width: 1199px) {
+  .investment .title {
+    font-size: 16px;
+  }
+  .college-box {
+    padding: 40px 0;
+  }
+  .college-box .title {
+    margin-bottom: 30px;
+  }
+  .college-box img {
+    width: 80%;
+  }
+  .college-box .text-box {
+    width: 100%;
+    margin: 16px auto 0;
+  }
+  .college-box .text-box h5 {
+    font-size: 14px;
+  }
+  .college-box .text-box p {
+    font-size: 16px;
+  }
+  .system-box {
+    padding: 40px 0;
+    width: 100%;
+  }
+  .system-box div {
+    background-size: 64% auto;
+    height: 120px;
+  }
+  .system-box h6 {
+    font-size: 14px;
+  }
+  .system-box p {
+    font-size: 12px;
+    margin-top: 0;
+  }
+  .pk-box {
+    padding: 40px 0;
+  }
+  .pk-box .pc-list {
+    margin-top: 20px;
+  }
+  .pk-box .pk-wrap {
+    width: 100%;
+  }
+  .pk-box .pk-img {
+    padding: 140px 5% 0;
+    width: 10%;
+  }
+  .pk-box .pk-img img {
+    width: 100%;
+  }
+  .pk-box .pk-content {
+    width: 40%;
+  }
+  .pk-box .pk-content img {
+    height: 36px;
+  }
+  .pk-box .pk-content div {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .pk-box .pk-content p {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    min-height: 70px;
+    font-size: 12px;
+  }
+  .pk-box .pk-content p:after {
+    content: "1";
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    margin-top: -15px;
+    top: 50%;
+  }
+  .pk-box .pk-name {
+    width: 50%;
+    height: 36px;
+    line-height: 36px;
+  }
+  .pk-box .pk-lf .pk-name {
+    margin-right: 10px;
+  }
+  .pk-box .pk-lf p {
+    padding: 5px 15px 5px 5px;
+  }
+  .pk-box .pk-lf p:after {
+    right: -15px;
+  }
+  .pk-box .pk-rt .pk-name {
+    margin-left: 10px;
+  }
+  .pk-box .pk-rt p {
+    padding: 5px 5px 5px 15px;
+  }
+  .pk-box .pk-rt p:after {
+    left: -15px;
+  }
 }

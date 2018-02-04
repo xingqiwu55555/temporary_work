@@ -123,3 +123,99 @@
   margin-top: 20px;
   background: none;
 }
+
+@media (max-width: 1199px) {
+  .about .btn {
+    width: 100px;
+    padding: 8px 0;
+  }
+  .num-box {
+    padding: 1px 0 10px;
+  }
+  .num-box ul {
+    padding: 20px 0;
+    width: 100%;
+  }
+  .num-box h5 {
+    font-size: 18px;
+  }
+  .num-box p {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  .num-box .num-btn {
+    margin: 20px auto;
+  }
+  .member-box ul {
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 40px;
+  }
+  .member-box li {
+    width: 19%;
+    height: 200px;
+    overflow: hidden;
+    margin-left: 1%;
+    padding: 20px 5px 0;
+    border-width: 1px;
+  }
+  .member-box li:first-child {
+    margin-left: 1%;
+  }
+  .member-box .member-line {
+    padding: 10px 0;
+    box-sizing: border-box;
+    height: 66px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .member-box .member-line h5 {
+    font-size: 16px;
+  }
+  .member-box .member-line h6 {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  .member-box p {
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .address-box {
+    padding: 30px 0;
+  }
+  .address-box .address-wrap {
+    width: 100%;
+    padding: 1px 0;
+  }
+  .address-box .part-one h1 {
+    font-size: 14px;
+  }
+  .address-box .part-one p {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  .address-box .part-one h6 {
+    font-size: 14px;
+    color: #52a2f4;
+    margin-top: 10px;
+  }
+  .address-box .part-two {
+    margin-left: 5px;
+    padding: 10px 0 10px 5px;
+    margin-top: 20px;
+    border-left: 1px solid #dcdcdc;
+  }
+  .address-box .part-two p {
+    line-height: 30px;
+    font-size: 12px;
+  }
+  .address-box .part-two .server-btn {
+    margin-top: 20px;
+    background: none;
+  }
+  .address-box .part-three {
+    clear: both;
+    margin-top: 10px;
+  }
+}

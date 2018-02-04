@@ -50,3 +50,36 @@
     }
   }
 }
+@media (max-width:1199px){
+  .template-box{
+    width: 100%;
+    margin: 0 auto 40px;
+    .tab-bar{
+      margin: 40px 0;
+      height: 50px;
+      line-height: 50px;
+      li{
+        font-size: 14px;
+      }
+    }
+    .content{
+      padding: 0 2%;
+    }
+    .content-lf,.content-rt{
+      width: 46%;
+      
+      .template-img{
+        width: 100%;
+      }
+      .wrap{
+        padding-top: 30%;
+        line-height: 50px;
+        font-size: 18px;
+        img{
+          width: 60%;
+          height: auto;
+        }
+      }
+    }
+  }
+}

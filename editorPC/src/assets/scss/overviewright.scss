@@ -1,0 +1,90 @@
+@import  "./_baseFunction";
+
+.box-one{
+  text-align: center;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  .overview-title{
+    text-align: center;
+  }
+  img{
+    width: 70%;
+    max-width: 260px;
+    max-height: 260px;
+  }
+  p{
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
+.box-two{
+  padding: 10px;
+  margin-bottom: 10px;
+  .overview-title{
+    text-align: left;
+    position: relative;
+    &:before{
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      line-height: 20px;
+      text-align: center;
+      background: $blueColor;
+      color: #fff;
+      position: absolute;
+      left: -16px;
+      top: 50%;
+      margin-top: -10px;
+    }
+  }
+  li{
+    padding-left: 20px;
+    &:nth-child(1){
+      .overview-title{ &:before{content: "1";} }
+    }
+    &:nth-child(2){
+      .overview-title{ &:before{content: "2";} }
+    }
+    &:nth-child(3){
+      .overview-title{ &:before{content: "3";} }
+    }
+  }
+  p{
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .btn{
+    width: 70%;
+    height: 36px;
+    margin: 10px auto 0;
+    line-height: 36px;
+    background: $blueColor;
+    color: #fff;
+    border-radius: 6px;
+    text-align: center;
+  }
+}
+.box-three{
+  li{
+    line-height: 24px;
+    font-size: 12px;
+    position: relative;
+    padding-right: 80px;
+    padding-left: 10px;
+  }
+  span{
+    position: absolute;
+    right: 5px;
+    top: 0;
+    line-height: 24px;
+    font-size: 12px;
+    width: 76px;
+  }
+  p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

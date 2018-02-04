@@ -54,3 +54,36 @@
 .template-box .content-lf:hover .wrap, .template-box .content-rt:hover .wrap {
   opacity: 1;
 }
+
+@media (max-width: 1199px) {
+  .template-box {
+    width: 100%;
+    margin: 0 auto 40px;
+  }
+  .template-box .tab-bar {
+    margin: 40px 0;
+    height: 50px;
+    line-height: 50px;
+  }
+  .template-box .tab-bar li {
+    font-size: 14px;
+  }
+  .template-box .content {
+    padding: 0 2%;
+  }
+  .template-box .content-lf, .template-box .content-rt {
+    width: 46%;
+  }
+  .template-box .content-lf .template-img, .template-box .content-rt .template-img {
+    width: 100%;
+  }
+  .template-box .content-lf .wrap, .template-box .content-rt .wrap {
+    padding-top: 30%;
+    line-height: 50px;
+    font-size: 18px;
+  }
+  .template-box .content-lf .wrap img, .template-box .content-rt .wrap img {
+    width: 60%;
+    height: auto;
+  }
+}
