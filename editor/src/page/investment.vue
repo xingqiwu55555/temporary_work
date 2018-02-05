@@ -20,45 +20,10 @@
     <div class="system-box">
       <p class="title">8大加盟体系</p>
       <ul class="clear">
-        <li class="active">
+        <li v-for="(item, i) in systemTextArr" :key="i" :class="{active: (i+1)==systemIndex}" @click="clickSystemIndex(i+1)">
           <div></div>
-          <h6>小程序支持</h6>
-          <p>小程序针对行业<br/>特性专属定制</p>
-        </li>
-        <li>
-          <div></div>
-          <h6>小程序支持</h6>
-          <p>小程序针对行业<br/>特性专属定制</p>
-        </li>
-        <li>
-          <div></div>
-          <h6>小程序支持</h6>
-          <p>小程序针对行业<br/>特性专属定制</p>
-        </li>
-        <li>
-          <div></div>
-          <h6>小程序支持</h6>
-          <p>小程序针对行业<br/>特性专属定制</p>
-        </li>
-        <li>
-          <div></div>
-          <h6>小程序支持</h6>
-          <p>小程序针对行业<br/>特性专属定制</p>
-        </li>
-        <li>
-          <div></div>
-          <h6>小程序支持</h6>
-          <p>小程序针对行业<br/>特性专属定制</p>
-        </li>
-        <li>
-          <div></div>
-          <h6>小程序支持</h6>
-          <p>小程序针对行业<br/>特性专属定制</p>
-        </li>
-        <li>
-          <div></div>
-          <h6>小程序支持</h6>
-          <p>小程序针对行业<br/>特性专属定制</p>
+          <h6>{{item.title}}</h6>
+          <p>{{item.topText}}<br/><span v-show="item.middleText">{{item.middleText}}<br></span>{{item.bottomText}}</p>
         </li>
       </ul>
     </div>
@@ -119,12 +84,23 @@ export default {
         require('../assets/images/investment/invest_banner1.jpg'),
         require('../assets/images/investment/invest_banner1.jpg'),
         require('../assets/images/investment/invest_banner1.jpg')
-      ]
+      ],
+      systemTextArr: [
+        {title: '小程序支持', topText: '小程序针对行业', bottomText: '特性专属定制'},
+        {title: '培训支持', topText: '远程培训，电话指导', bottomText: '优秀代理现场支持'},
+        {title: '投入回报', topText: '投入39800元', bottomText: '40倍高收益回报'},
+        {title: '团建扶持', topText: '抢占互联网新机', bottomText: '遇机会稍纵即逝'},
+        {title: '客服支持', topText: '专业东雅商学院', middleText: '服务指导扶持', bottomText: '创业孩指导'},
+        {title: '技术支持', topText: '一次投入终身维护项目', middleText: '不断更新迭代，囊括公', bottomText: '众网页小程序三位一体'},
+        {title: '代理网络加盟', topText: '互联网风口创业新方向', middleText: '当前错过淘宝公众如今小', bottomText: '程序新风口你还要错过么'},
+        {title: 'OEM定制', topText: '支持代理商系统', middleText: '后套OEM定制', bottomText: '不显示轻易达'}
+      ],
+      systemIndex: 1
     }
   },
   methods: {
-    showModel(type){
-      this.setType = type;
+    clickSystemIndex(index){
+      this.systemIndex = index;
     }
   }
 }

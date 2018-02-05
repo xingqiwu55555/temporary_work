@@ -209,16 +209,23 @@
   .system-box{
     padding: 40px 0;
     width: 100%;
+    li{
+      overflow: hidden;
+    }
     div{
-      background-size: 64% auto;
+      background-size: 60% auto;
       height: 120px;
     }
     h6{
       font-size: 14px;
+      white-space: nowrap;
+      text-overflow: hidden;
     }
     p{
       font-size: 12px;
       margin-top: 0;
+      white-space: nowrap;
+      text-overflow: hidden;
     }
   }
   .pk-box{
@@ -229,15 +236,13 @@
     .pk-wrap{
       width: 100%;
     }
-    .pk-img{
-      padding: 140px 5% 0;
-      width: 10%;
-      img{
-        width: 100%;
-      }
+    .pk-img, .pk-rt{
+      display: none;
     }
     .pk-content{
-      width: 40%;
+      width: 80%;
+      max-width: 320px;
+      margin: 0 auto;
       img{
         height: 36px;
       }
@@ -268,6 +273,7 @@
       line-height: 36px;
     }
     .pk-lf{
+      float: none;
       .pk-name{
         margin-right: 10px;
       }
@@ -277,18 +283,6 @@
           right: -15px;
         }
       }
-    }
-    .pk-rt{
-      .pk-name{
-        margin-left: 10px;
-      }
-      p{
-        padding: 5px 5px 5px 15px;
-        &:after{
-          left: -15px;
-        }
-      }
-  
     }
   }
 }

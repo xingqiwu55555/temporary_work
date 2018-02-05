@@ -3,10 +3,10 @@
     <div class="form">
       <div class="form-label">代理类型：</div>
       <div class="form-input form-radio">
-        <label class="active">
+        <label @click="clickFormType(1)" :class="{active: this.formData.type==1}">
           一级代理商
         </label>
-        <label>
+        <label @click="clickFormType(2)" :class="{active: this.formData.type==2}">
           二级代理商
         </label>
       </div>
@@ -33,14 +33,19 @@
       <div class="form-label">所在区域：</div>
       <div class="form-input form-select">
         <label class="addr-prevince">
-          <p>黑龙江省</p>
-          <ul>
-            <li></li>
+          <p @click="toggleSelectPre" ref="prevince">黑龙江省</p>
+          <ul :class="{showActive: selectPre}">
+            <li>北京</li>
+            <li>被蒙古</li>
+            <li>被蒙古</li>
+            <li>被蒙古</li>
+            <li>被蒙古</li>
+            <li>被蒙古</li>
           </ul>
         </label>
         <label class="addr-city">
-          <p>选择市</p>
-          <ul>
+          <p @click="toggleSelectCity" ref="city">选择市</p>
+          <ul :class="{showActive: selectCity}">
             <li>选择市</li>
           </ul>
         </label>
@@ -77,10 +82,47 @@
 <script>
   export default {
     data () {
-      return {}
+      return {
+        selectPre: false,
+        selectCity: false,
+        formData: {
+          type: 1,
+          name: '',
+          phone: '',
+          qq: '',
+          business: '',
+          member: '',
+          plan: ''
+        }
+      }
     },
     methods:{
-      
+      clickFormType(type){
+        this.formData.type = type;
+      },
+      toggleSelectPre(){
+        this.selectPre = !this.selectPre;
+        if (this.selectPre) {
+          this.selectCity = false;
+        }
+      },
+      toggleSelectCity(){
+        this.selectCity = !this.selectCity;
+        if (this.selectCity) {
+          this.selectPre = false;
+        }
+      }
+    },
+    mounted () {
+      const that = this
+      document.onclick = (e) => {
+        console.log(e.target)
+        console.log(that.$refs.prevince)
+        if (e.target != that.$refs.prevince || e.target != that.$refs.city) {
+          this.selectCity = false;
+          this.selectPre = false;
+        }
+      }
     }
   }
 </script>
@@ -134,11 +176,6 @@ $inputMobileHeight: 36px;
         border-radius: 50%;
         border: 3px solid $blueColor;
       }
-      &:hover{
-        &:before{
-          background: $blueColor;
-        }
-      }
     }
     .active{
       &:before{
@@ -148,10 +185,10 @@ $inputMobileHeight: 36px;
   }
   .form-text{
     input{
-      width: $inputMobileWidth;
-      height: $inputMobileHeight;
+      width: $inputWidth;
+      height: $inputHeight;
       box-sizing: border-box;
-      border-radius: 8px;
+      border-radius: 6px;
       border: 2px solid #c9c9c9;
       padding: 5px 10px;
       color: $minColor;
@@ -164,7 +201,7 @@ $inputMobileHeight: 36px;
     textarea{
       width: $inputWidth;
       box-sizing: border-box;
-      border-radius: 8px;
+      border-radius: 6px;
       border: 2px solid #c9c9c9;
       padding: 5px 10px;
       color: $minColor;
@@ -180,7 +217,7 @@ $inputMobileHeight: 36px;
       height: 50px;
       color: #fff;
       background: $blueColor;
-      border-radius: 8px;
+      border-radius: 6px;
       width: $inputWidth;
       box-sizing: border-box;
       border: none;
@@ -202,12 +239,18 @@ $inputMobileHeight: 36px;
       vertical-align: middle;
     }
     .addr-prevince{
-      border-radius: 8px;
+      border-radius: 6px;
       background: $blueColor;
       z-index: 10;
       width: 210px;
       p{
         color: #fff;
+      }
+      li{
+        &.active, &:hover{
+          background: $blueColor;
+          
+        }
       }
     }
     .addr-city{
@@ -220,10 +263,39 @@ $inputMobileHeight: 36px;
       p{
         color: $minColor;
       }
+      li{
+        &.active, &:hover{
+          background: #c9c9c9;
+        }
+      }
     }
     ul{
       position: absolute;
+      top: 46px;
+      border-radius: 2px;
+      left: 0;
       width: 100%;
+      height: 0;
+      overflow: hidden;
+      background: #fff;
+      opacity: 0;
+      -moz-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1); 
+      -webkit-box-shadow: 0 2px 12px 0 rgba(0,0,0,.1); 
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+      box-sizing: border-box;
+      z-index: 10;
+      transition-duration: 0.8s;
+      &.showActive{
+        height: auto;
+        max-height: 220px;
+        overflow-y: auto;
+        opacity: 1;
+      }
+      li{
+        &.active, &:hover{
+          color: #fff;
+        }
+      }
     }
   }
 }
@@ -263,7 +335,7 @@ $inputMobileHeight: 36px;
       textarea{
         width: 100%;
         box-sizing: border-box;
-        border-radius: 8px;
+        border-radius: 6px;
         border-width: 1px;
         padding: 2px 10px;
         min-height: 160px;
@@ -272,7 +344,7 @@ $inputMobileHeight: 36px;
     .form-btn{
       button{
         height: 40px;
-        border-radius: 8px;
+        border-radius: 6px;
         width: 100%;
         font-size: 16px;
       }
@@ -286,7 +358,7 @@ $inputMobileHeight: 36px;
         vertical-align: middle;
       }
       .addr-prevince{
-        border-radius: 8px;
+        border-radius: 6px;
         background: $blueColor;
         z-index: 10;
         width: 50%;

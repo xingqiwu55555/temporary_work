@@ -24,6 +24,7 @@ export default {
       swiperOption_main: {
         spaceBetween: 30,
         effect: 'fade',
+        loop: true,
         autoplay: {
           delay: 3000,
           disableOnInteraction: false
@@ -62,6 +63,23 @@ export default {
     height: 24px;
     margin-top: -12px;
     background-size: 15px 24px;
+  }
+}
+@media (max-width:789px){
+  .swiper-main{
+    .swiper-slide{
+      min-height: 207px;
+      position: relative;
+      text-align: center;
+      img{
+        width: auto;
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+      }
+    }
   }
 }
 </style>

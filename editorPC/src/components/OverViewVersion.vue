@@ -92,12 +92,14 @@
     line-height: 30px;
     div{
       width: 80%;
+      max-width: 470px;
+      height: 88px;
+      line-height: 88px;
       margin: 0 auto;
       background-size: 100% 100%;
       background-repeat: no-repeat;
       color: #fff;
       font-size: 16px;
-      padding: 4px 0;
     }
   }
 }

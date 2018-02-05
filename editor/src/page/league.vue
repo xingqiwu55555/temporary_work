@@ -26,34 +26,15 @@
     <div class="industry-box">
       <p class="title">适用行业</p>
       <ul class="box">
-        <li class="industry-server">
+        <li class="industry-server" 
+          v-for="(item, i) in industryArr"
+          :key="i" :class="{'margin-left': i > 0, 'active': industryIndex==i}"
+          @click="clickIndustry(i)"
+
+        >
           <div class="box-wrap">
-            <img src="../assets/images/league/industry1.png" alt="">
-            <p>生活服务</p>
-          </div>
-        </li>
-        <li class="industry-company margin-left margin-left-mobile">
-          <div class="box-wrap">
-            <img src="../assets/images/league/industry2.png" alt="">
-            <p>企业官网</p>
-          </div>
-        </li>
-        <li class="industry-news margin-left margin-left-mobile">
-          <div class="box-wrap">
-            <img src="../assets/images/league/industry3.png" alt="">
-            <p>行业资讯</p>
-          </div>
-        </li>
-        <li class="industry-mark margin-left">
-          <div class="box-wrap">
-            <img src="../assets/images/league/industry4.png" alt="">
-            <p>商场</p>
-          </div>
-        </li>
-        <li class="industry-more margin-left margin-left-mobile">
-          <div class="box-wrap">
-            <img src="../assets/images/league/industry5.png" alt="">
-            <p>更多</p>
+            <img :src="item.imgUrl" alt="">
+            <p>{{item.title}}</p>
           </div>
         </li>
       </ul>
@@ -104,6 +85,7 @@ export default {
         require('../assets/images/league/league-banner1.jpg'),
         require('../assets/images/league/league-banner1.jpg'),
         require('../assets/images/league/league-banner1.jpg'),
+        require('../assets/images/league/league-banner1.jpg'),
         require('../assets/images/league/league-banner1.jpg')
       ],
       swiperOption_support: {
@@ -121,14 +103,22 @@ export default {
         virtual: {
           slides: (function () {
             const slides = [];
-            const imgUrl = require('../assets/images/league/support-banner1.png');
-            for (let i = 0; i < 5; i += 1) {
+            for (let i = 1; i < 8; i += 1) {
+              const imgUrl = require('../assets/images/league/support-banner'+ i +'.png');
               slides.push(`<div class="slide-img"><img src="${imgUrl}"/></div><div class="slide-text">稳定系统保障</div></div>`);
             }
             return slides
           }())
         }
-      }
+      },
+      industryArr: [
+        {title: '生活服务', imgUrl: require('../assets/images/league/industry1.png')},
+        {title: '企业官网', imgUrl: require('../assets/images/league/industry2.png')},
+        {title: '行业资讯', imgUrl: require('../assets/images/league/industry3.png')},
+        {title: '商场', imgUrl: require('../assets/images/league/industry4.png')},
+        {title: '更多', imgUrl: require('../assets/images/league/industry5.png')}
+      ],
+      industryIndex: -1
     }
   },
   computed: {
@@ -137,8 +127,8 @@ export default {
     }
   },
   methods: {
-    showModel(type){
-      this.setType = type;
+    clickIndustry(index){
+      this.industryIndex = index;
     }
   }
 }

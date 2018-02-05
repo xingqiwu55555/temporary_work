@@ -24,6 +24,7 @@
   padding-top: 80px;
   img{
     width: 30%;
+    max-width: 432px;
   }
   p{
     font-size: 14px;

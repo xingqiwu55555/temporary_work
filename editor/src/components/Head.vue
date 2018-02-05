@@ -14,11 +14,9 @@
       <div class="menu">
         <div class="menu-wrap">
           <ul class="nav">
-            <li><router-link :to="{ name: 'league'}" exact class="active" tag="a">微盟</router-link></li>
-            <li><router-link :to="{ name: 'agent'}" exact tag="a">代理商</router-link></li>
-            <li><router-link :to="{ name: 'template'}" exact tag="a">模板</router-link></li>
-            <li><router-link :to="{ name: 'investment'}" exact tag="a">招商加盟</router-link></li>
-            <li><router-link :to="{ name: 'about'}" exact tag="a">关于我们</router-link></li>
+            <li v-for="(item, i) in routeArr" :key="i">
+              <router-link :to="{ name: item.routeName}" exact :class="{active: item.routeName==$route.name}" tag="a">{{item.title}}</router-link>
+            </li>
           </ul>
           <div class="form">
             <router-link :to="{ name: 'login'}" exact class="logon-btn" tag="a">登录</router-link>
@@ -35,11 +33,9 @@
       </h2>
       <img src="" alt="" class="">
       <ul class="nav">
-        <li><router-link :to="{ name: 'league'}" exact class="active" tag="a">微盟</router-link></li>
-        <li><router-link :to="{ name: 'agent'}" exact tag="a">代理商</router-link></li>
-        <li><router-link :to="{ name: 'template'}" exact tag="a">模板</router-link></li>
-        <li><router-link :to="{ name: 'investment'}" exact tag="a">招商加盟</router-link></li>
-        <li><router-link :to="{ name: 'about'}" exact tag="a">关于我们</router-link></li>
+        <li v-for="(item, i) in routeArr" :key="i">
+          <router-link :to="{ name: item.routeName}" exact :class="{active: item.routeName==$route.name}" tag="a">{{item.title}}</router-link>
+        </li>
       </ul>
       <div class="form">
         <router-link :to="{ name: 'login'}" exact class="logon-btn" tag="a">登录</router-link>
@@ -53,7 +49,14 @@
   export default {
     data () {
       return {
-        mobileSlide: false
+        mobileSlide: false,
+        routeArr: [
+          {title: '微盟', routeName: 'league'},
+          {title: '代理商', routeName: 'agent'},
+          {title: '模板', routeName: 'template'},
+          {title: '招商加盟', routeName: 'investment'},
+          {title: '关于我们', routeName: 'about'}
+        ]
       }
     },
     methods:{

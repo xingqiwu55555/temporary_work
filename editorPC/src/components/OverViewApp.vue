@@ -46,6 +46,7 @@
   text-align: center;
   img{
     width: 80%;
+    max-width: 117px;
   }
   p{
     font-size: 14px;

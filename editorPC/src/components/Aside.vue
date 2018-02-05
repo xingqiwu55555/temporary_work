@@ -31,17 +31,9 @@
         <img src="../assets/images/slider5.png" alt="">
         <span slot="title">数据</span>
       </el-menu-item>
-      <el-menu-item index="6" route="login">
-        <img src="../assets/images/slider6.png" alt="">
-        <span slot="title">推广</span>
-      </el-menu-item>
-      <el-menu-item index="7" route="wechat">
+      <el-menu-item index="6" route="wechat">
         <img src="../assets/images/slider7.png" alt="">
         <span slot="title">微信</span>
-      </el-menu-item>
-      <el-menu-item index="8" route="login">
-        <img src="../assets/images/slider8.png" alt="">
-        <span slot="title">落地宝</span>
       </el-menu-item>
     </el-menu>
   </el-col>
@@ -96,17 +88,18 @@
     width: 30px;
   }
 }
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  // min-height: 300px;
+.el-menu--collapse{
 }
 .el-menu-item{
+  padding: 0 50px !important;
+  font-size: 16px;
   &:hover{
     background: $blueColor !important;
     color: #fff;
   }
   img{
-    width: 20px;
-    margin-right: 10px;
+    width: 24px;
+    margin-right: 30px;
   }
 }
 .el-menu-item.is-active {
